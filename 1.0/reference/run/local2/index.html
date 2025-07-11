@@ -1458,11 +1458,7 @@
 <span class="normal">53</span>
 <span class="normal">54</span>
 <span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
     <span class="n">config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">DEFAULT_CONFIG</span><span class="p">),</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to config file&quot;</span><span class="p">),</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
@@ -1499,11 +1495,7 @@
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">KeyboardInterrupt -- goodbye&quot;</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
-        <span class="c1"># Save results</span>
-        <span class="k">if</span> <span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">messages</span><span class="p">:</span>
-            <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traj.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">messages</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
-            <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total cost: $</span><span class="si">{</span><span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total steps: </span><span class="si">{</span><span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_calls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">save_traj</span><span class="p">(</span><span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traj.json&quot;</span><span class="p">),</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">agent_app</span><span class="o">.</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">agent_app</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1528,9 +1520,9 @@
 
             <details class="quote">
               <summary>Source code in <code>src/microsweagent/run/local2.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cli</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">59</span>
+<span class="normal">60</span>
+<span class="normal">61</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cli</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;CLI entry point for script execution.&quot;&quot;&quot;</span>
     <span class="n">app</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>

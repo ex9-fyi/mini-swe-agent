@@ -1502,6 +1502,9 @@
         <span class="s2">&quot;--yolo&quot;</span><span class="p">,</span>
         <span class="n"><span title="typer.Option(help)">help</span></span><span class="o">=</span><span class="s2">&quot;Run without confirmation&quot;</span><span class="p">,</span>
     <span class="p">),</span>
+    <span class="n">output</span><span class="p">:</span> <span class="n"><span title="pathlib.Path">Path</span></span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n"><span title="typer.Option">Option</span></span><span class="p">(</span>
+        <span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n"><span title="typer.Option(help)">help</span></span><span class="o">=</span><span class="s2">&quot;Output file&quot;</span>
+    <span class="p">),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n"><a class="autorefs autorefs-internal" title="            microsweagent.agents.interactive.InteractiveAgent" href="../../agents/interactive/#microsweagent.agents.interactive.InteractiveAgent">InteractiveAgent</a></span>
 </code></pre></div>
 
@@ -1547,10 +1550,7 @@
 <span class="normal">68</span>
 <span class="normal">69</span>
 <span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="normal">71</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
     <span class="n">config</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">DEFAULT_CONFIG</span><span class="p">),</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to config file&quot;</span><span class="p">),</span>
     <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
@@ -1561,6 +1561,7 @@
     <span class="p">),</span>
     <span class="n">problem</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-p&quot;</span><span class="p">,</span> <span class="s2">&quot;--problem&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Problem statement&quot;</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="n">yolo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;--yolo&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run without confirmation&quot;</span><span class="p">),</span>
+    <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output file&quot;</span><span class="p">),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InteractiveAgent</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run micro-SWE-agent right here, right now.&quot;&quot;&quot;</span>
     <span class="n">_config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
@@ -1576,18 +1577,14 @@
         <span class="o">**</span><span class="p">(</span><span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;confirm_actions&quot;</span><span class="p">:</span> <span class="ow">not</span> <span class="n">yolo</span><span class="p">}),</span>
     <span class="p">)</span>
 
+    <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
         <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[bold red]KeyboardInterrupt -- goodbye[/bold red]&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;patch.txt&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
     <span class="k">finally</span><span class="p">:</span>
-        <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traj.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">agent</span><span class="o">.</span><span class="n">messages</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total cost: [bold green]$</span><span class="si">{</span><span class="n">agent</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">[/bold green]&quot;</span><span class="p">)</span>
-        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total steps: [bold green]</span><span class="si">{</span><span class="n">agent</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_calls</span><span class="si">}</span><span class="s2">[/bold green]&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">save_traj</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">agent</span>
 </code></pre></div></td></tr></table></div>
             </details>
