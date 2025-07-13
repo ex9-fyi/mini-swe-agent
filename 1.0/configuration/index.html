@@ -1105,6 +1105,23 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#special-case-anthropic-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Special Case: Anthropic Models
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1169,9 +1186,17 @@
 <span class="c1"># Default model name</span>
 <span class="c1"># (default: not set)</span>
 <span class="nv">MSWEA_MODEL_NAME</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-20250514&quot;</span>
+
+<span class="c1"># Default API key</span>
+<span class="c1"># (default: not set)</span>
+<span class="nv">MSWEA_MODEL_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span>
 </code></pre></div>
-<p>In addition, if you are prompted for a model name &amp; API key, it will be stored in the <code>.env</code> file
-as <code>API_KEY_&lt;MODEL_NAME&gt;</code>.</p>
+<h3 id="special-case-anthropic-models">Special Case: Anthropic Models</h3>
+<p>For Anthropic models, you can also use <code>ANTHROPIC_API_KEYS</code> for advanced parallel execution:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Multiple Anthropic keys for parallel execution (separated by &quot;::&quot;)</span>
+<span class="nv">ANTHROPIC_API_KEYS</span><span class="o">=</span><span class="s2">&quot;key1::key2::key3&quot;</span>
+</code></pre></div>
+<p>This allows different threads to use different API keys to avoid prompt caching conflicts when running multiple agents in parallel.</p>
 
 
 
