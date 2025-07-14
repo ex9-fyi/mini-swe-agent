@@ -10,7 +10,7 @@
       
       
       
-        <link rel="next" href="installation/">
+        <link rel="next" href="quickstart/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -18,7 +18,7 @@
     
     
       
-        <title>Index - micro-SWE-agent documentation</title>
+        <title>Overview - micro-SWE-agent documentation</title>
       
     
     
@@ -145,7 +145,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Overview
             
           </span>
         </div>
@@ -368,6 +368,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
     
@@ -421,12 +427,134 @@
   
   
     <li class="md-nav__item">
-      <a href="installation/" class="md-nav__link">
+      <a href="quickstart/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     Quick start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Usage
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="usage/swebench/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SWE-bench
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    FAQ
     
   </span>
   
@@ -1176,20 +1304,24 @@
 <h1>The 100 line AI agent that's actually useful</h1>
 </div>
 
+<p>In 2024, <a href="https://swe-bench.com">SWE-bench</a> &amp; <a href="https://swe-agent.com">SWE-agent</a> helped kickstart the agentic AI for software revolution. In 2025, we ask:
+<strong>What if the agent was 100x smaller, and still worked nearly as well?</strong></p>
+<p><code>micro</code> is for</p>
 <ul>
-<li><strong>🐜 Minimal</strong>: Just <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/microsweagent/agents/default.py">100 lines of python</a> (+100 for <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/microsweagent/environments/local.py">env</a>, <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/microsweagent/models/litellm_model.py">model</a>, <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/microsweagent/run/hello_world.py">script</a>) — no fancy dependencies! Optionally, a few more lines for interactive UIs.</li>
-<li><strong>💪 Powerful:</strong> Resolves issues on the <a href="https://www.swebench.com/">SWE-bench verified benchmark</a>.</li>
+<li>🧪 <strong>Researchers</strong> who want to <strong>benchmark, fine-tune or RL</strong> without assumptions, bloat, or surprises</li>
+<li>🧑‍💻 <strong>Hackers &amp; power users</strong> who like their tools like their scripts: <strong>short, sharp, and readable</strong></li>
+<li>🐳 <strong>Engineers</strong> who want something <strong>trivial to sandbox &amp; to deploy anywhere</strong></li>
+</ul>
+<p>Here's some details:</p>
+<ul>
+<li><strong>🐜 Minimal</strong>: Just <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents/default.py">100 lines of python</a> (+100 total for <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments/local.py">env</a>,
+<a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/models/litellm_model.py">model model</a>, <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/hello_world.py">script</a>) — no fancy dependencies!</li>
+<li><strong>💪 Powerful:</strong> Resolves XX% of GitHub issues in the <a href="https://www.swebench.com/">SWE-bench verified benchmark</a>.</li>
 <li><strong>🤗 Friendly:</strong> Comes with <strong>two convenient UIs</strong> that will turn this into your daily dev swiss army knife!</li>
+<li><strong>🍀 Environments:</strong> In addition to local envs, you can use <strong>docker</strong>, <strong>podman</strong>, <strong>singularity</strong>, <strong>apptainer</strong>, and more</li>
 <li><strong>🎓 Cutting edge:</strong> Built by the Princeton &amp; Stanford team behind <a href="https://swe-bench.com">SWE-bench</a> and <a href="https://swe-agent.com">SWE-agent</a>.</li>
 </ul>
-<p><strong>Use it to:</strong></p>
-<ul>
-<li>🔥 Instantly solve problems: <code>pip install pipx &amp;&amp; pipx run micro-swe-agent</code></li>
-<li>⚙️ Take full control &amp; quickly build custom agents</li>
-<li>🏋 Fine-tune &amp; RL with a minimal, assumption-free agent</li>
-<li>🐳 Deploy seamlessly to sandboxed environments &amp; CI/CD</li>
-</ul>
-<details class="info">
+<details class="note">
 <summary>Why use micro-SWE-agent for research?</summary>
 <p><a href="https://swe-agent.com/latest/">SWE-agent</a> jump-started the development of AI agents in 2024. Back then, we placed a lot of emphasis on tools and special interfaces for the agent. However, one year later, a lot of this is not needed at all to build a useful agent!</p>
 <p>In fact, micro-SWE-agent:</p>
@@ -1200,7 +1332,7 @@
 </ul>
 <p>This makes it perfect as a baseline system and for a system that puts the language model (rather than the agent scaffold) in the middle of our attention.</p>
 </details>
-<details class="info">
+<details class="note">
 <summary>Why use micro-SWE-agent as a tool?</summary>
 <p>Some agents are overfitted research artifacts. Others are UI-heavy tools, highly optimized for a specific user experience. Both variants are hard to understand.</p>
 <p><code>micro</code> wants to be:</p>
@@ -1218,27 +1350,57 @@
 </ul>
 </details>
 <p>micro-SWE-agent comes with two convenient interfaces:</p>
-<div align="center">
+</details>
+<table>
+<tr>
+<td width="50%">
+<strong>Simple UI</strong> (<code>micro</code>)
+</td>
+<td>
+<strong>Textual UI</strong> (<code>micro2</code>)
+</td>
+</tr>
+<tr>
+<td width="50%">
+<a class="glightbox" href="assets/micro.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img width="600px" src="assets/micro.png"></a>
+</td>
+<td>
+<a class="glightbox" href="assets/micro2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img width="600px" src="assets/micro2.png"></a>
+</td>
+</tr>
+<tr>
+<td>
+<strong>Python bindings</strong>
+</td>
+<td>
+<strong>More in the docs</strong>
+</td>
+</tr>
+<tr>
+<td>
 
-<p>
-<p><b>Simple UI</b></p>
-<a class="glightbox" href="assets/micro.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img width=600px src="assets/micro.png"></a>
-</p>
+<div class="highlight"><pre><span></span><code><span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=...</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;Write a python sudoku game for me&quot;</span><span class="p">)</span>
+</code></pre></div>
+</td>
+<td>
 
-<p>
-<p><b>Textual UI</b></p>
-<a class="glightbox" href="assets/micro2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img width=600px src="assets/micro2.png"></a>
-</p>
-</div>
+- TBD
+</td>
+</tr>
+</table>
 
 <h2 id="get-started">Get Started</h2>
 <p>Ready to try micro-SWE-agent?</p>
-<p><strong><a href="installation/">🚀 Installation &amp; Quick Start →</a></strong></p>
+<p><strong><a href="quickstart/">🚀 Installation &amp; Quick Start →</a></strong></p>
 <p>Install with pipx in seconds or set up for development - choose your path and get started immediately!</p>
 <h2 id="whats-next">What's Next?</h2>
 <p>Ready to dive deeper? Check out:</p>
 <ul>
-<li><strong><a href="installation/">🚀 Installation &amp; Quick Start</a></strong> - Get up and running in minutes</li>
+<li><strong><a href="quickstart/">🚀 Installation &amp; Quick Start</a></strong> - Get up and running in minutes</li>
 <li><strong><a href="reference/">API Reference</a></strong> - Explore all available components</li>
 <li><strong><a href="reference/run/hello_world/">Run Scripts</a></strong> - Learn how to create custom entry points</li>
 <li><strong><a href="reference/models/litellm/">Models</a></strong> - Configure different language models</li>
@@ -1312,7 +1474,7 @@
         
         
           
-          <a href="installation/" class="md-footer__link md-footer__link--next" aria-label="Next: Quick start">
+          <a href="quickstart/" class="md-footer__link md-footer__link--next" aria-label="Next: Quick start">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
