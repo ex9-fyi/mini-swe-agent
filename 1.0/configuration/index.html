@@ -1745,7 +1745,7 @@
 <p>We use <a href="https://jinja.palletsprojects.com/">Jinja2</a> to render templates (e.g., the instance template).
 TL;DR: You include variables with double curly braces, e.g. <code>{{task}}</code>, but you can also do fairly complicated logic like this:</p>
 <details class="note">
-<summary>Dealing with long observations</summary>
+<summary>Example: Dealing with long observations</summary>
 <div class="highlight"><pre><span></span><code><span class="cp">{%</span>- <span class="k">set</span> <span class="nv">full_output</span> -<span class="cp">%}</span>
 <span class="x">    &lt;returncode&gt;</span>
 <span class="x">        </span><span class="cp">{{</span><span class="nv">output.returncode</span><span class="cp">}}</span>
@@ -1781,6 +1781,12 @@ TL;DR: You include variables with double curly braces, e.g. <code>{{task}}</code
 <span class="cp">{%</span>- <span class="k">endif</span> -<span class="cp">%}</span>
 </code></pre></div>
 </details>
+<p>In all builtin agents, you can use the following variables:</p>
+<ul>
+<li>Environment variables</li>
+<li>Config variables</li>
+<li>Explicitly passed variables (<code>observation</code>, <code>task</code> etc.) depending on the template</li>
+</ul>
 <div class="grid cards">
 <ul>
 <li>
