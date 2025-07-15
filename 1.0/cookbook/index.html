@@ -728,6 +728,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customizing execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1542,6 +1557,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Advanced">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      Customizing execution
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -1694,7 +1724,11 @@ things that you might want to do.</p>
 </div>
 </div>
 <h2 id="advanced">Advanced</h2>
+<h3 id="customizing-execution">Customizing execution</h3>
 <p>An agent that uses python function for some actions:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="__tabbed_4_1">Subclassing the agent</label><label for="__tabbed_4_2">Subclassing the environment</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">shlex</span>
 
@@ -1709,7 +1743,34 @@ things that you might want to do.</p>
             <span class="k">return</span> <span class="n">python_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shlex</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">python_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;stdout&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentWithPythonFunctions</span><span class="p">(</span><span class="n">LocalEnvironment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">command</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;python_function&quot;</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span><span class="s2">&quot;python_function&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">python_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">EnvironmentWithPythonFunctions</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>An agent that exits when the <code>submit</code> command is issued:</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="__tabbed_5_1">Subclassing the agent</label><label for="__tabbed_5_2">Subclassing the environment</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">Submitted</span>
 
 <span class="k">class</span><span class="w"> </span><span class="nc">AgentQuitsOnSubmit</span><span class="p">(</span><span class="n">DefaultAgent</span><span class="p">):</span>
@@ -1720,7 +1781,29 @@ things that you might want to do.</p>
             <span class="k">raise</span> <span class="n">Submitted</span><span class="p">(</span><span class="s2">&quot;The agent has finished its task.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">Submitted</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentQuitsOnSubmit</span><span class="p">(</span><span class="n">LocalEnvironment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">Submitted</span><span class="p">(</span><span class="s2">&quot;The agent has finished its task.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">EnvironmentQuitsOnSubmit</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <p>An agent that validates actions before execution (also an example of how to use an extended config class):</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="__tabbed_6_1">Subclassing the agent</label><label for="__tabbed_6_2">Subclassing the environment</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
@@ -1745,6 +1828,41 @@ things that you might want to do.</p>
                 <span class="k">raise</span> <span class="n">NonTerminatingException</span><span class="p">(</span><span class="s2">&quot;Action blocked&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
 </code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">NonTerminatingException</span><span class="p">,</span> <span class="n">DefaultAgentConfig</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentWithForbiddenPatternsConfig</span><span class="p">(</span><span class="n">LocalEnvironmentConfig</span><span class="p">):</span>
+    <span class="n">forbidden_patterns</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">r</span><span class="s2">&quot;rm -rf /&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;sudo.*passwd&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;mkfs\.&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">EnvironmentWithForbiddenPatterns</span><span class="p">(</span><span class="n">LocalEnvironment</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">config_class</span><span class="o">=</span><span class="n">EnvironmentWithForbiddenPatternsConfig</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">forbidden_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">NonTerminatingException</span><span class="p">(</span><span class="s2">&quot;Action blocked&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">EnvironmentWithForbiddenPatterns</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <div class="grid cards">
 <ul>
 <li>
