@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../quickstart/">
+        <link rel="prev" href="../micro2/">
       
       
-        <link rel="next" href="../../configuration/">
+        <link rel="next" href="../inspector/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -376,6 +376,10 @@
       
         
       
+        
+      
+        
+      
     
     
     
@@ -458,6 +462,12 @@
       
         
       
+        
+      
+        
+      
+        
+      
     
     
     
@@ -491,6 +501,52 @@
             Usage
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../micro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <code>micro</code>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../micro2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    <code>micro2</code>
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -557,10 +613,42 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inspector/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Inspector
+    
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -604,12 +692,58 @@
   
   
     <li class="md-nav__item">
+      <a href="../../cookbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cookbook
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../faq/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     FAQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing
     
   </span>
   
@@ -1113,6 +1247,8 @@
       
         
       
+        
+      
     
     
     
@@ -1251,7 +1387,30 @@
   
   
   <span class="md-ellipsis">
-    SWE-bench
+    SWE-bench (batch)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/run/swebench_single/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SWE-bench (single)
     
   </span>
   
@@ -1312,6 +1471,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Implementation
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1338,6 +1506,12 @@
 
 
 <h1 id="swe-bench">SWE-bench</h1>
+<p>We provide two scripts to run on <a href="https://www.swebench.com/">SWE-bench</a>:</p>
+<ul>
+<li><code>src/microsweagent/run/extra/swebench.py</code>: Evaluate on SWE-bench in batch mode</li>
+<li><code>src/microsweagent/run/extra/swebench_single.py</code>: Evaluate on a single SWE-bench task
+   (used for development &amp; debugging).</li>
+</ul>
 <h2 id="faq">FAQ</h2>
 <blockquote>
 <p>How can I run on a different dataset?</p>
@@ -1348,6 +1522,480 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <p>Some progress runners are stuck at 'initializing task' for a very long time</p>
 </blockquote>
 <p>They might be pulling docker containers -- the run sshould start immediately the next time.</p>
+<h2 id="implementation">Implementation</h2>
+<details class="note">
+<summary>Default config</summary>
+<ul>
+<li><a href="https://github.com/swe-agent/micro-swe-agent/blob/main/src/microsweagent/config/extra/swebench.yaml">Read on GitHub</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="nt">agent</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">system_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">You are a helpful assistant that can interact with a computer.</span>
+
+<span class="w">    </span><span class="no">Your response must contain exactly ONE bash code block with ONE command (or commands connected with &amp;&amp; or ||).</span>
+<span class="w">    </span><span class="no">Include a THOUGHT section before your command where you explain your reasoning process.</span>
+<span class="w">    </span><span class="no">Format your response as shown in &lt;format_example&gt;.</span>
+
+<span class="w">    </span><span class="no">&lt;format_example&gt;</span>
+<span class="w">    </span><span class="no">Your reasoning and analysis here. Explain why you want to perform the action.</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">your_command_here</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">    </span><span class="no">&lt;/format_example&gt;</span>
+
+<span class="w">    </span><span class="no">Failure to follow these rules will cause your response to be rejected.</span>
+<span class="w">    </span><span class="no">To finish, issue exactly (!) the following command: `echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached`</span>
+<span class="w">    </span><span class="no">without any other command.</span>
+<span class="w">  </span><span class="nt">instance_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">Please solve this issue: {{task}}</span>
+
+<span class="w">    </span><span class="no">You can execute bash commands and edit files to implement the necessary changes.</span>
+
+<span class="w">    </span><span class="no">## Recommended Workflow</span>
+<span class="w">    </span><span class="no">1. Analyze the codebase by finding and reading relevant files</span>
+<span class="w">    </span><span class="no">2. Create a script to reproduce the issue</span>
+<span class="w">    </span><span class="no">3. Edit the source code to resolve the issue</span>
+<span class="w">    </span><span class="no">4. Verify your fix works by running your script again</span>
+<span class="w">    </span><span class="no">5. Test edge cases to ensure your fix is robust</span>
+
+<span class="w">    </span><span class="no">## Important Rules</span>
+
+<span class="w">    </span><span class="no">1. Every response must contain exactly one action</span>
+<span class="w">    </span><span class="no">2. The action must be enclosed in triple backticks</span>
+<span class="w">    </span><span class="no">3. Directory or environment variable changes are not persistent. Every action is executed in a new subshell.</span>
+<span class="w">       </span><span class="no">However, you can prefix any action with `MY_ENV_VAR=MY_VALUE cd /path/to/working/dir &amp;&amp; ...` or write/load environment variables from files</span>
+<span class="w">    </span><span class="no">4. To finish, issue exactly (!) the following command: `echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached`</span>
+<span class="w">       </span><span class="no">without any other command.</span>
+
+<span class="w">    </span><span class="no">## Formatting your response</span>
+
+<span class="w">    </span><span class="no">Here is an example of a correct response:</span>
+
+<span class="w">    </span><span class="no">&lt;example_response&gt;</span>
+<span class="w">    </span><span class="no">THOUGHT: I need to understand the structure of the repository first. Let me check what files are in the current directory to get a better understanding of the codebase.</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">ls -la</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">    </span><span class="no">&lt;/example_response&gt;</span>
+
+<span class="w">    </span><span class="no">## Useful command examples</span>
+
+<span class="w">    </span><span class="no">### Create a new file:</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">cat &lt;&lt;&#39;EOF&#39; &gt; newfile.py</span>
+<span class="w">    </span><span class="no">import numpy as np</span>
+<span class="w">    </span><span class="no">hello = &quot;world&quot;</span>
+<span class="w">    </span><span class="no">print(hello)</span>
+<span class="w">    </span><span class="no">EOF</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">### Edit files with sed:</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no"># Replace all occurrences</span>
+<span class="w">    </span><span class="no">sed -i &#39;s/old_string/new_string/g&#39; filename.py</span>
+
+<span class="w">    </span><span class="no"># Replace only first occurrence</span>
+<span class="w">    </span><span class="no">sed -i &#39;s/old_string/new_string/&#39; filename.py</span>
+
+<span class="w">    </span><span class="no"># Replace first occurrence on line 1</span>
+<span class="w">    </span><span class="no">sed -i &#39;1s/old_string/new_string/&#39; filename.py</span>
+
+<span class="w">    </span><span class="no"># Replace all occurrences in lines 1-10</span>
+<span class="w">    </span><span class="no">sed -i &#39;1,10s/old_string/new_string/g&#39; filename.py</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">### View file content:</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no"># View specific lines with numbers</span>
+<span class="w">    </span><span class="no">nl -ba filename.py | sed -n &#39;10,20p&#39;</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">### Any other command you want to run</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">anything</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">  </span><span class="nt">action_observation_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">{%- set full_output -%}</span>
+<span class="w">    </span><span class="no">&lt;returncode&gt;</span>
+<span class="w">    </span><span class="no">{{output.returncode}}</span>
+<span class="w">    </span><span class="no">&lt;/returncode&gt;</span>
+<span class="w">    </span><span class="no">&lt;stderr&gt;</span>
+<span class="w">    </span><span class="no">{{output.stderr}}</span>
+<span class="w">    </span><span class="no">&lt;/stderr&gt;</span>
+<span class="w">    </span><span class="no">&lt;stdout&gt;</span>
+<span class="w">    </span><span class="no">{{output.stdout}}</span>
+<span class="w">    </span><span class="no">&lt;/stdout&gt;</span>
+<span class="w">    </span><span class="no">{%- endset -%}</span>
+<span class="w">    </span><span class="no">{%- if full_output | length &lt; 10000 -%}</span>
+<span class="w">    </span><span class="no">{{ full_output }}</span>
+<span class="w">    </span><span class="no">{%- else -%}</span>
+<span class="w">    </span><span class="no">&lt;warning&gt;</span>
+<span class="w">    </span><span class="no">The output of your last command was too long.</span>
+<span class="w">    </span><span class="no">Please try a different command that produces less output.</span>
+<span class="w">    </span><span class="no">If you&#39;re looking at a file you can try use head, tail or sed to view a smaller number of lines selectively.</span>
+<span class="w">    </span><span class="no">If you&#39;re using grep or find and it produced too much output, you can use a more selective search pattern.</span>
+<span class="w">    </span><span class="no">If you really need to see something from the full command&#39;s output, you can redirect output to a file and then search in that file.</span>
+<span class="w">    </span><span class="no">&lt;/warning&gt;</span>
+<span class="w">    </span><span class="no">{%- set elided_chars = full_output | length - 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;observation_head&gt;</span>
+<span class="w">    </span><span class="no">{{ full_output[:5000] }}</span>
+<span class="w">    </span><span class="no">&lt;/observation_head&gt;</span>
+
+<span class="w">    </span><span class="no">&lt;elided_chars&gt;</span>
+<span class="w">    </span><span class="no">{{ elided_chars }} characters elided</span>
+<span class="w">    </span><span class="no">&lt;/elided_chars&gt;</span>
+
+<span class="w">    </span><span class="no">&lt;observation_tail&gt;</span>
+<span class="w">    </span><span class="no">{{ full_output[-5000:] }}</span>
+<span class="w">    </span><span class="no">&lt;/observation_tail&gt;</span>
+<span class="w">    </span><span class="no">{%- endif -%}</span>
+<span class="w">  </span><span class="nt">format_error_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">Please always provide EXACTLY ONE action in triple backticks, found {{actions|length}} actions.</span>
+
+<span class="w">    </span><span class="no">Please format your action in triple backticks as shown in &lt;response_example&gt;.</span>
+
+<span class="w">    </span><span class="no">&lt;response_example&gt;</span>
+<span class="w">    </span><span class="no">Here are some thoughts about why you want to perform the action.</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">&lt;action&gt;</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">    </span><span class="no">&lt;/response_example&gt;</span>
+
+<span class="w">    </span><span class="no">If you want to finish, please submit your response by issuing the command</span>
+<span class="w">    </span><span class="no">shown in triple backticks in &lt;submission_example&gt;.</span>
+
+<span class="w">    </span><span class="no">&lt;submission_example&gt;</span>
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">    </span><span class="no">&lt;/submission_example&gt;</span>
+
+<span class="w">  </span><span class="nt">step_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.</span>
+<span class="w">  </span><span class="nt">cost_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.</span>
+
+<span class="nt">environment</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">cwd</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/testbed&quot;</span>
+<span class="w">  </span><span class="nt">env</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">PAGER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat</span>
+<span class="w">    </span><span class="nt">MANPAGER</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cat</span>
+<span class="w">    </span><span class="nt">LESS</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-R</span>
+<span class="w">    </span><span class="nt">PIP_PROGRESS_BAR</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;off&#39;</span>
+<span class="w">    </span><span class="nt">TQDM_DISABLE</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;1&#39;</span>
+
+<span class="nt">model</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">model_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;claude-sonnet-4-20250514&quot;</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary><code>swebench.py</code> run script</summary>
+<ul>
+<li><a href="https://github.com/swe-agent/micro-swe-agent/blob/main/src/microsweagent/run/extra/swebench.py">Read on GitHub</a></li>
+<li><a href="../../reference/run/swebench/">API reference</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">concurrent.futures</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">typer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich.live</span><span class="w"> </span><span class="kn">import</span> <span class="n">Live</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">package_dir</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.docker</span><span class="w"> </span><span class="kn">import</span> <span class="n">DockerEnvironment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.run.extra.utils.batch_progress</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunBatchProgressManager</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
+
+<span class="n">DATASET_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;full&quot;</span><span class="p">:</span> <span class="s2">&quot;princeton-nlp/SWE-Bench&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;verified&quot;</span><span class="p">:</span> <span class="s2">&quot;princeton-nlp/SWE-Bench_Verified&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lite&quot;</span><span class="p">:</span> <span class="s2">&quot;princeton-nlp/SWE-Bench_Lite&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;multimodal&quot;</span><span class="p">:</span> <span class="s2">&quot;princeton-nlp/SWE-Bench_Multimodal&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;multilingual&quot;</span><span class="p">:</span> <span class="s2">&quot;swe-bench/SWE-Bench_Multilingual&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;smith&quot;</span><span class="p">:</span> <span class="s2">&quot;SWE-bench/SWE-smith&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;_test&quot;</span><span class="p">:</span> <span class="s2">&quot;klieret/swe-bench-dummy-test-dataset&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="n">_OUTPUT_FILE_LOCK</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ProgressTrackingAgent</span><span class="p">(</span><span class="n">DefaultAgent</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Simple wrapper around DefaultAgent that provides progress updates.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">progress_manager</span><span class="p">:</span> <span class="n">RunBatchProgressManager</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_manager</span><span class="p">:</span> <span class="n">RunBatchProgressManager</span> <span class="o">=</span> <span class="n">progress_manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instance_id</span> <span class="o">=</span> <span class="n">instance_id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Override step to provide progress updates.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_manager</span><span class="o">.</span><span class="n">update_instance_status</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instance_id</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Step </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">n_calls</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2"> ($</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cost</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_swebench_docker_image_name</span><span class="p">(</span><span class="n">instance</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the image name for a SWEBench instance.&quot;&quot;&quot;</span>
+    <span class="n">image_name</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;image_name&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">image_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Docker doesn&#39;t allow double underscore, so we replace them with a magic token</span>
+        <span class="n">iid</span> <span class="o">=</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]</span>
+        <span class="n">id_docker_compatible</span> <span class="o">=</span> <span class="n">iid</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">,</span> <span class="s2">&quot;_1776_&quot;</span><span class="p">)</span>
+        <span class="n">image_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;swebench/sweb.eval.x86_64.</span><span class="si">{</span><span class="n">id_docker_compatible</span><span class="si">}</span><span class="s2">:latest&quot;</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">image_name</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">update_preds_file</span><span class="p">(</span><span class="n">output_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update the output JSON file with results from a single instance.&quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">_OUTPUT_FILE_LOCK</span><span class="p">:</span>
+        <span class="n">output_data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">output_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">output_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">output_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+        <span class="n">output_data</span><span class="p">[</span><span class="n">instance_id</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;model_name_or_path&quot;</span><span class="p">:</span> <span class="n">model_name</span><span class="p">,</span>
+            <span class="s2">&quot;instance_id&quot;</span><span class="p">:</span> <span class="n">instance_id</span><span class="p">,</span>
+            <span class="s2">&quot;model_patch&quot;</span><span class="p">:</span> <span class="n">result</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">output_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">remove_from_preds_file</span><span class="p">(</span><span class="n">output_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Remove an instance from the predictions file.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">output_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">return</span>
+    <span class="k">with</span> <span class="n">_OUTPUT_FILE_LOCK</span><span class="p">:</span>
+        <span class="n">output_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">output_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">instance_id</span> <span class="ow">in</span> <span class="n">output_data</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">output_data</span><span class="p">[</span><span class="n">instance_id</span><span class="p">]</span>
+            <span class="n">output_path</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">output_data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">process_instance</span><span class="p">(</span>
+    <span class="n">instance</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span>
+    <span class="n">output_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">config_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">progress_manager</span><span class="p">:</span> <span class="n">RunBatchProgressManager</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Process a single SWEBench instance.&quot;&quot;&quot;</span>
+    <span class="n">instance_id</span> <span class="o">=</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]</span>
+    <span class="n">instance_dir</span> <span class="o">=</span> <span class="n">output_dir</span> <span class="o">/</span> <span class="n">instance_id</span>
+    <span class="c1"># avoid inconsistent state if something here fails and there&#39;s leftover previous files</span>
+    <span class="n">remove_from_preds_file</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">instance_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">.traj.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">image_name</span> <span class="o">=</span> <span class="n">get_swebench_docker_image_name</span><span class="p">(</span><span class="n">instance</span><span class="p">)</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">config_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;problem_statement&quot;</span><span class="p">]</span>
+
+    <span class="n">progress_manager</span><span class="o">.</span><span class="n">on_instance_start</span><span class="p">(</span><span class="n">instance_id</span><span class="p">)</span>
+    <span class="n">progress_manager</span><span class="o">.</span><span class="n">update_instance_status</span><span class="p">(</span><span class="n">instance_id</span><span class="p">,</span> <span class="s2">&quot;Pulling/starting docker&quot;</span><span class="p">)</span>
+
+    <span class="n">agent</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">extra_info</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">DockerEnvironment</span><span class="p">(</span><span class="o">**</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;environment&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image_name</span><span class="p">}))</span>
+        <span class="n">agent</span> <span class="o">=</span> <span class="n">ProgressTrackingAgent</span><span class="p">(</span>
+            <span class="n">model</span><span class="p">,</span>
+            <span class="n">env</span><span class="p">,</span>
+            <span class="n">progress_manager</span><span class="o">=</span><span class="n">progress_manager</span><span class="p">,</span>
+            <span class="n">instance_id</span><span class="o">=</span><span class="n">instance_id</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{}),</span>
+        <span class="p">)</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">extra_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()}</span>
+        <span class="k">raise</span> <span class="n">e</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">save_traj</span><span class="p">(</span>
+            <span class="n">agent</span><span class="p">,</span>
+            <span class="n">instance_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">.traj.json&quot;</span><span class="p">,</span>
+            <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span>
+            <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">,</span>
+            <span class="n">extra_info</span><span class="o">=</span><span class="n">extra_info</span><span class="p">,</span>
+            <span class="n">instance_id</span><span class="o">=</span><span class="n">instance_id</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">update_preds_file</span><span class="p">(</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">,</span> <span class="n">instance_id</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="n">result</span><span class="p">)</span>
+        <span class="n">progress_manager</span><span class="o">.</span><span class="n">on_instance_end</span><span class="p">(</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">exit_status</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_instances</span><span class="p">(</span>
+    <span class="n">instances</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">],</span> <span class="o">*</span><span class="p">,</span> <span class="n">filter_spec</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">slice_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter and slice a list of SWEBench instances.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">shuffle</span><span class="p">:</span>
+        <span class="n">instances</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">instances</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">])</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
+    <span class="n">before_filter</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span>
+    <span class="n">instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">instance</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">filter_spec</span><span class="p">,</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">])]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">after_filter</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">))</span> <span class="o">!=</span> <span class="n">before_filter</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instance filter: </span><span class="si">{</span><span class="n">before_filter</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">after_filter</span><span class="si">}</span><span class="s2"> instances&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">slice_spec</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">x</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">slice_spec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)]</span>
+        <span class="n">instances</span> <span class="o">=</span> <span class="n">instances</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">after_slice</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">))</span> <span class="o">!=</span> <span class="n">before_filter</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Instance slice: </span><span class="si">{</span><span class="n">before_filter</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">after_slice</span><span class="si">}</span><span class="s2"> instances&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">instances</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
+    <span class="n">subset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span> <span class="s2">&quot;--subset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWEBench subset to use or path to a dataset&quot;</span><span class="p">),</span>
+    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;--split&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dataset split&quot;</span><span class="p">),</span>
+    <span class="n">slice_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;--slice&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Slice specification (e.g., &#39;0:5&#39; for first 5 instances)&quot;</span><span class="p">),</span>
+    <span class="n">filter_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;--filter&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Filter instance IDs by regex&quot;</span><span class="p">),</span>
+    <span class="n">shuffle</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--shuffle&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Shuffle instances&quot;</span><span class="p">),</span>
+    <span class="n">output</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output directory&quot;</span><span class="p">),</span>
+    <span class="n">workers</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;-w&quot;</span><span class="p">,</span> <span class="s2">&quot;--workers&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of worker threads for parallel processing&quot;</span><span class="p">),</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">),</span>
+    <span class="n">redo_existing</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--redo-existing&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Redo existing instances&quot;</span><span class="p">),</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+        <span class="n">package_dir</span> <span class="o">/</span> <span class="s2">&quot;config&quot;</span> <span class="o">/</span> <span class="s2">&quot;extra&quot;</span> <span class="o">/</span> <span class="s2">&quot;swebench.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a config file&quot;</span>
+    <span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run micro-SWE-agent on SWEBench instances&quot;&quot;&quot;</span>
+    <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">DATASET_MAPPING</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">subset</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">, split </span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">instances</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">))</span>
+
+    <span class="n">instances</span> <span class="o">=</span> <span class="n">filter_instances</span><span class="p">(</span><span class="n">instances</span><span class="p">,</span> <span class="n">filter_spec</span><span class="o">=</span><span class="n">filter_spec</span><span class="p">,</span> <span class="n">slice_spec</span><span class="o">=</span><span class="n">slice_spec</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="n">shuffle</span><span class="p">)</span>
+    <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">redo_existing</span> <span class="ow">and</span> <span class="p">(</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="n">existing_instances</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">((</span><span class="n">output_path</span> <span class="o">/</span> <span class="s2">&quot;preds.json&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">existing_instances</span><span class="p">)</span><span class="si">}</span><span class="s2"> existing instances&quot;</span><span class="p">)</span>
+        <span class="n">instances</span> <span class="o">=</span> <span class="p">[</span><span class="n">instance</span> <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span> <span class="k">if</span> <span class="n">instance</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">existing_instances</span><span class="p">]</span>
+
+    <span class="n">output_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Running on </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">)</span><span class="si">}</span><span class="s2"> instances...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Results will be saved to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">progress_manager</span> <span class="o">=</span> <span class="n">RunBatchProgressManager</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">instances</span><span class="p">),</span> <span class="n">output_path</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;exit_statuses_</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="si">}</span><span class="s2">.yaml&quot;</span><span class="p">)</span>
+
+    <span class="n">futures_cancelled</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">with</span> <span class="n">Live</span><span class="p">(</span><span class="n">progress_manager</span><span class="o">.</span><span class="n">render_group</span><span class="p">,</span> <span class="n">refresh_per_second</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">ThreadPoolExecutor</span><span class="p">(</span><span class="n">max_workers</span><span class="o">=</span><span class="n">workers</span><span class="p">)</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+            <span class="n">futures</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">executor</span><span class="o">.</span><span class="n">submit</span><span class="p">(</span><span class="n">process_instance</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">output_path</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">progress_manager</span><span class="p">):</span> <span class="n">instance</span><span class="p">[</span>
+                    <span class="s2">&quot;instance_id&quot;</span>
+                <span class="p">]</span>
+                <span class="k">for</span> <span class="n">instance</span> <span class="ow">in</span> <span class="n">instances</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">concurrent</span><span class="o">.</span><span class="n">futures</span><span class="o">.</span><span class="n">as_completed</span><span class="p">(</span><span class="n">futures</span><span class="p">):</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">future</span><span class="o">.</span><span class="n">result</span><span class="p">()</span>
+                <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">futures_cancelled</span><span class="p">:</span>
+                        <span class="k">raise</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cancelling all pending jobs. Press ^C again to exit immediately.&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">future</span> <span class="ow">in</span> <span class="n">futures</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">running</span><span class="p">()</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">future</span><span class="o">.</span><span class="n">done</span><span class="p">():</span>
+                            <span class="n">future</span><span class="o">.</span><span class="n">cancel</span><span class="p">()</span>
+                    <span class="n">futures_cancelled</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">instance_id</span> <span class="o">=</span> <span class="n">futures</span><span class="p">[</span><span class="n">future</span><span class="p">]</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in future for instance </span><span class="si">{</span><span class="n">instance_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+                    <span class="n">progress_manager</span><span class="o">.</span><span class="n">on_uncaught_exception</span><span class="p">(</span><span class="n">instance_id</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<details class="note">
+<summary><code>swebench_single.py</code> run script</summary>
+<ul>
+<li><a href="https://github.com/swe-agent/micro-swe-agent/blob/main/src/microsweagent/run/extra/swebench_single.py">Read on GitHub</a></li>
+<li><a href="../../reference/run/swebench_single/">API reference</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Run on a single SWE-Bench instance.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">typer</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">package_dir</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive</span><span class="w"> </span><span class="kn">import</span> <span class="n">InteractiveAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.docker</span><span class="w"> </span><span class="kn">import</span> <span class="n">DockerEnvironment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.run.extra.swebench</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATASET_MAPPING</span><span class="p">,</span> <span class="n">get_swebench_docker_image_name</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
+    <span class="n">subset</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;lite&quot;</span><span class="p">,</span> <span class="s2">&quot;--subset&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWEBench subset to use or path to a dataset&quot;</span><span class="p">),</span>
+    <span class="n">split</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;dev&quot;</span><span class="p">,</span> <span class="s2">&quot;--split&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Dataset split&quot;</span><span class="p">),</span>
+    <span class="n">instance_spec</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--instance&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SWE-Bench instance ID&quot;</span><span class="p">),</span>
+    <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-m&quot;</span><span class="p">,</span> <span class="s2">&quot;--model&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Model to use&quot;</span><span class="p">),</span>
+    <span class="n">config_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+        <span class="n">package_dir</span> <span class="o">/</span> <span class="s2">&quot;config&quot;</span> <span class="o">/</span> <span class="s2">&quot;extra&quot;</span> <span class="o">/</span> <span class="s2">&quot;swebench.yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to a config file&quot;</span>
+    <span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run on a single SWE-Bench instance.&quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">DATASET_MAPPING</span><span class="p">[</span><span class="n">subset</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="n">dataset_path</span> <span class="o">=</span> <span class="n">subset</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loading dataset </span><span class="si">{</span><span class="n">dataset_path</span><span class="si">}</span><span class="s2">, split </span><span class="si">{</span><span class="n">split</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="n">instances</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">inst</span><span class="p">[</span><span class="s2">&quot;instance_id&quot;</span><span class="p">]:</span> <span class="n">inst</span>  <span class="c1"># type: ignore</span>
+        <span class="k">for</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">load_dataset</span><span class="p">(</span><span class="n">dataset_path</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="n">split</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="n">instance_spec</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+        <span class="n">instance_spec</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">instances</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="nb">int</span><span class="p">(</span><span class="n">instance_spec</span><span class="p">)]</span>
+    <span class="n">instance</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">instances</span><span class="p">[</span><span class="n">instance_spec</span><span class="p">]</span>  <span class="c1"># type: ignore</span>
+
+    <span class="n">_config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">config_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">InteractiveAgent</span><span class="p">(</span>
+        <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})),</span>
+        <span class="n">DockerEnvironment</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">get_swebench_docker_image_name</span><span class="p">(</span><span class="n">instance</span><span class="p">)),</span>
+        <span class="o">**</span><span class="p">(</span><span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;yolo&quot;</span><span class="p">}),</span>
+    <span class="p">)</span>
+    <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">instance</span><span class="p">[</span><span class="s2">&quot;problem_statement&quot;</span><span class="p">])</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">app</span><span class="p">()</span>
+</code></pre></div>
+</details>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14 12h-4v-2h4m0 6h-4v-2h4m6-6h-2.81a6 6 0 0 0-1.82-1.96L17 4.41 15.59 3l-2.17 2.17a6 6 0 0 0-2.83 0L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81c1.04 1.79 2.97 3 5.19 3s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20z"/></svg></span> <strong>Something broken/unclear?</strong>
+    <a href="https://github.com/SWE-agent/SWE-agent/issues/new"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Open issue</a></p>
+</li>
+<li>
+<p><span class="twemoji lg middle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 19h3v3h-3zm2-17c5.35.22 7.68 5.62 4.5 9.67-.83 1-2.17 1.66-2.83 2.5C13 15 13 16 13 17h-3c0-1.67 0-3.08.67-4.08.66-1 2-1.59 2.83-2.25C15.92 8.43 15.32 5.26 12 5a3 3 0 0 0-3 3H6a6 6 0 0 1 6-6"/></svg></span> <strong>Open-ended discussions</strong>
+    <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s-o3_yXPZbaH2wVnxnss1EkQ"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span> Join our Slack</a></p>
+</li>
+</ul>
+</div>
 
 
 
@@ -1367,6 +2015,10 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <!-- Floating Bubbles -->
 <div class="floating-bubbles">
 <div class="floating-bubbles-title">Our projects</div>
+  <a href="https://swe-agent.com/" class="bubble" title="SWE-agent">
+    <img src="../../assets/sweagent_logo.svg" alt="SWE-agent">
+    <span class="bubble-tooltip">SWE-agent</span>
+  </a>
   <a href="https://swe-rex.com/" class="bubble" title="SWE-rex">
     <img src="../../assets/swerex_logo.svg" alt="SWE-rex">
     <span class="bubble-tooltip">SWE-ReX</span>
@@ -1407,7 +2059,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../../quickstart/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Quick start">
+          <a href="../micro2/" class="md-footer__link md-footer__link--prev" aria-label="Previous: &lt;code&gt;micro2&lt;/code&gt;">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1417,20 +2069,20 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
                 Previous
               </span>
               <div class="md-ellipsis">
-                Quick start
+                <code>micro2</code>
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../configuration/" class="md-footer__link md-footer__link--next" aria-label="Next: Configuration">
+          <a href="../inspector/" class="md-footer__link md-footer__link--next" aria-label="Next: Inspector">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Configuration
+                Inspector
               </div>
             </div>
             <div class="md-footer__button md-icon">

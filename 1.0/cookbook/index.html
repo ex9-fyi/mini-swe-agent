@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../contributing/">
+        <link rel="prev" href="../configuration/">
       
       
-        <link rel="next" href="agents/default/">
+        <link rel="next" href="../faq/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>API Reference - micro-SWE-agent documentation</title>
+        <title>Cookbook - micro-SWE-agent documentation</title>
       
     
     
@@ -107,7 +107,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#api-reference" class="md-skip">
+        <a href="#cookbook" class="md-skip">
           Skip to content
         </a>
       
@@ -147,7 +147,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              API Reference
+              Cookbook
             
           </span>
         </div>
@@ -260,10 +260,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href=".." class="md-tabs__link">
           
   
@@ -282,13 +284,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../reference/" class="md-tabs__link">
           
   
   
@@ -357,6 +357,8 @@
       
   
   
+    
+  
   
   
     
@@ -382,14 +384,17 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
         
           
           <div class="md-nav__link md-nav__container">
@@ -406,13 +411,13 @@
             </a>
             
               
-              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="0">
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             Getting Started
@@ -622,10 +627,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../cookbook/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Cookbook
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -636,6 +663,77 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mix-match" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mix &amp; match
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Mix &amp; match">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environments
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agents
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      Advanced
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -698,8 +796,6 @@
       
   
   
-    
-  
   
   
     
@@ -721,21 +817,18 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../reference/" class="md-nav__link ">
               
   
   
@@ -748,13 +841,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             API Reference
@@ -819,7 +912,7 @@
   
   
     <li class="md-nav__item">
-      <a href="agents/default/" class="md-nav__link">
+      <a href="../reference/agents/default/" class="md-nav__link">
         
   
   
@@ -842,7 +935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="agents/interactive/" class="md-nav__link">
+      <a href="../reference/agents/interactive/" class="md-nav__link">
         
   
   
@@ -865,7 +958,7 @@
   
   
     <li class="md-nav__item">
-      <a href="agents/textual/" class="md-nav__link">
+      <a href="../reference/agents/textual/" class="md-nav__link">
         
   
   
@@ -947,7 +1040,7 @@
   
   
     <li class="md-nav__item">
-      <a href="models/litellm/" class="md-nav__link">
+      <a href="../reference/models/litellm/" class="md-nav__link">
         
   
   
@@ -970,7 +1063,7 @@
   
   
     <li class="md-nav__item">
-      <a href="models/anthropic/" class="md-nav__link">
+      <a href="../reference/models/anthropic/" class="md-nav__link">
         
   
   
@@ -993,7 +1086,7 @@
   
   
     <li class="md-nav__item">
-      <a href="models/test_models/" class="md-nav__link">
+      <a href="../reference/models/test_models/" class="md-nav__link">
         
   
   
@@ -1016,7 +1109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="models/utils/" class="md-nav__link">
+      <a href="../reference/models/utils/" class="md-nav__link">
         
   
   
@@ -1096,7 +1189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="environments/local/" class="md-nav__link">
+      <a href="../reference/environments/local/" class="md-nav__link">
         
   
   
@@ -1119,7 +1212,7 @@
   
   
     <li class="md-nav__item">
-      <a href="environments/docker/" class="md-nav__link">
+      <a href="../reference/environments/docker/" class="md-nav__link">
         
   
   
@@ -1142,7 +1235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="environments/swerex_docker/" class="md-nav__link">
+      <a href="../reference/environments/swerex_docker/" class="md-nav__link">
         
   
   
@@ -1228,7 +1321,7 @@
   
   
     <li class="md-nav__item">
-      <a href="run/hello_world/" class="md-nav__link">
+      <a href="../reference/run/hello_world/" class="md-nav__link">
         
   
   
@@ -1251,7 +1344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="run/local/" class="md-nav__link">
+      <a href="../reference/run/local/" class="md-nav__link">
         
   
   
@@ -1274,7 +1367,7 @@
   
   
     <li class="md-nav__item">
-      <a href="run/local2/" class="md-nav__link">
+      <a href="../reference/run/local2/" class="md-nav__link">
         
   
   
@@ -1297,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="run/github_issue/" class="md-nav__link">
+      <a href="../reference/run/github_issue/" class="md-nav__link">
         
   
   
@@ -1320,7 +1413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="run/swebench/" class="md-nav__link">
+      <a href="../reference/run/swebench/" class="md-nav__link">
         
   
   
@@ -1343,7 +1436,7 @@
   
   
     <li class="md-nav__item">
-      <a href="run/swebench_single/" class="md-nav__link">
+      <a href="../reference/run/swebench_single/" class="md-nav__link">
         
   
   
@@ -1401,15 +1494,16 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#agents" class="md-nav__link">
+  <a href="#mix-match" class="md-nav__link">
     <span class="md-ellipsis">
-      Agents
+      Mix &amp; match
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav" aria-label="Mix &amp; match">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#models" class="md-nav__link">
     <span class="md-ellipsis">
       Models
@@ -1417,8 +1511,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#environments" class="md-nav__link">
     <span class="md-ellipsis">
       Environments
@@ -1426,11 +1520,25 @@
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agents
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#run-scripts" class="md-nav__link">
+  <a href="#advanced" class="md-nav__link">
     <span class="md-ellipsis">
-      Run Scripts
+      Advanced
     </span>
   </a>
   
@@ -1453,7 +1561,7 @@
 
 
   
-    <a href="https://github.com/SWE-agent/micro-SWE-agent/edit/main/docs/reference/index.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/SWE-agent/micro-SWE-agent/edit/main/docs/cookbook.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1461,36 +1569,182 @@
   
 
 
-<h1 id="api-reference">API Reference</h1>
-<p>This section provides detailed documentation for all classes and modules in micro-SWE-agent.</p>
-<h2 id="agents">Agents</h2>
-<ul>
-<li><strong><a href="agents/default/">DefaultAgent</a></strong> - The minimal default agent implementation</li>
-<li><strong><a href="agents/interactive/">InteractiveAgent</a></strong> - Agent with human-in-the-loop functionality</li>
-<li><strong><a href="agents/textual/">TextualAgent</a></strong> - Agent with interactive TUI using Textual</li>
-</ul>
-<h2 id="models">Models</h2>
-<ul>
-<li><strong><a href="models/litellm/">LitellmModel</a></strong> - Wrapper for LiteLLM models (supports most LLM providers)</li>
-<li><strong><a href="models/anthropic/">AnthropicModel</a></strong> - Specialized interface for Anthropic models</li>
-<li><strong><a href="models/test_models/">DeterministicModel</a></strong> - Deterministic models for testing</li>
-<li><strong><a href="models/utils/">Model Utilities</a></strong> - Convenience functions for model selection and configuration</li>
-</ul>
-<h2 id="environments">Environments</h2>
-<ul>
-<li><strong><a href="environments/local/">LocalEnvironment</a></strong> - Execute commands in the local environment</li>
-<li><strong><a href="environments/docker/">DockerEnvironment</a></strong> - Execute commands in Docker containers</li>
-<li><strong><a href="environments/swerex_docker/">SwerexDockerEnvironment</a></strong> - Extended Docker environment with SWE-Rex integration</li>
-</ul>
-<h2 id="run-scripts">Run Scripts</h2>
-<p>Entry points and command-line interfaces:</p>
-<ul>
-<li><strong><a href="run/hello_world/">Hello World</a></strong> - Simple example usage</li>
-<li><strong><a href="run/local/">Local</a></strong> - Interactive local execution</li>
-<li><strong><a href="run/local2/">Local2 (Textual)</a></strong> - TUI-based local execution</li>
-<li><strong><a href="run/github_issue/">GitHub Issue</a></strong> - GitHub issue solver</li>
-<li><strong><a href="run/swebench/">SWE-bench</a></strong> - SWE-bench evaluation script</li>
-</ul>
+<h1 id="cookbook">Cookbook</h1>
+<p>We provide several different entry points to the agent,
+for example <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/hello_world.py">hello world</a>,
+or the <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/local.py">default when calling <code>micro</code></a>.</p>
+<p>Want to cook up your custom version and the config is not enough?
+Just follow the recipe below:</p>
+<ol>
+<li>What's the control flow you need? Pick an <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents">agent class</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents/default.py">simplest example</a>, <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents/interactive.py">with human in the loop</a>)</li>
+<li>How should actions be executed? Pick an <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments">environment class</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments/local.py">local</a>, or <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments/docker.py">docker</a>)</li>
+<li>How is the LM queried? Pick a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/models">model class</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/models/litellm_model.py">litellm</a>)</li>
+<li>How to invoke the agent? Bind them all together in a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run">run script</a>, possibly reading from a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/config">config</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/hello_world.py">hello world</a>, or <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/local.py"><code>micro</code> entry point</a>)</li>
+</ol>
+<p>We aim to keep all of these components very simple, but offer lots of choice between them -- enough to cover a broad range of
+things that you might want to do.</p>
+<p>You can override the default entry point by setting the <code>MSWEA_DEFAULT_RUN</code> environment variable to the import path of your run script.</p>
+<h2 id="mix-match">Mix &amp; match</h2>
+<h3 id="models">Models</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Hello world (use automatic model selection)</label><label for="__tabbed_1_2">Hello world (Anthropic)</label><label for="__tabbed_1_3">Hello world (Litellm)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;claude-sonnet-4-20250514&quot;</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models.anthropic_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">AnthropicModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;claude-sonnet-4-20250514&quot;</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">AnthropicModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models.litellm_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LitellmModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">model_name</span> <span class="o">=</span> <span class="s2">&quot;gpt-4o&quot;</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+<span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="environments">Environments</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Hello world with local execution</label><label for="__tabbed_2_2">Hello world with docker execution</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.docker</span><span class="w"> </span><span class="kn">import</span> <span class="n">DockerEnvironment</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">DockerEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="agents">Agents</h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="__tabbed_3_1">Default agent</label><label for="__tabbed_3_2">Human in the loop</label><label for="__tabbed_3_3">Human in the loop (textual)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">DefaultAgent</span><span class="p">(</span>
+    <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive</span><span class="w"> </span><span class="kn">import</span> <span class="n">InteractiveAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">InteractiveAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive_textual</span><span class="w"> </span><span class="kn">import</span> <span class="n">TextualAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
+
+<span class="n">agent</span> <span class="o">=</span> <span class="n">TextualAgent</span><span class="p">(</span>
+    <span class="n">LitellmModel</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">model_name</span><span class="p">),</span>
+    <span class="n">LocalEnvironment</span><span class="p">(),</span>
+<span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h2 id="advanced">Advanced</h2>
+<p>An agent that uses python function for some actions:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shlex</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">python_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;stdout&quot;</span><span class="p">:</span> <span class="s2">&quot;...&quot;</span><span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AgentWithPythonFunctions</span><span class="p">(</span><span class="n">DefaultAgent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;python_function&quot;</span><span class="p">):</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">action</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">removeprefix</span><span class="p">(</span><span class="s2">&quot;python_function&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">python_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</code></pre></div>
+<p>An agent that exits when the <code>submit</code> command is issued:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">Submitted</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">AgentQuitsOnSubmit</span><span class="p">(</span><span class="n">DefaultAgent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;submit&quot;</span><span class="p">:</span>
+            <span class="c1"># The `Submitted` exception will be caught by the agent and</span>
+            <span class="c1"># the final output will be printed.</span>
+            <span class="k">raise</span> <span class="n">Submitted</span><span class="p">(</span><span class="s2">&quot;The agent has finished its task.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</code></pre></div>
+<p>An agent that validates actions before execution (also an example of how to use an extended config class):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">NonTerminatingException</span><span class="p">,</span> <span class="n">DefaultAgentConfig</span>
+<span class="p">)</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidatingAgentConfig</span><span class="p">(</span><span class="n">DefaultAgentConfig</span><span class="p">):</span>
+    <span class="n">forbidden_patterns</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">r</span><span class="s2">&quot;rm -rf /&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;sudo.*passwd&quot;</span><span class="p">,</span>
+        <span class="sa">r</span><span class="s2">&quot;mkfs\.&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ValidatingAgent</span><span class="p">(</span><span class="n">DefaultAgent</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">config_class</span><span class="o">=</span><span class="n">ValidatingAgentConfig</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">execute_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">forbidden_patterns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;action&quot;</span><span class="p">],</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="n">NonTerminatingException</span><span class="p">(</span><span class="s2">&quot;Action blocked&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_action</span><span class="p">(</span><span class="n">action</span><span class="p">)</span>
+</code></pre></div>
 <div class="grid cards">
 <ul>
 <li>
@@ -1566,7 +1820,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../contributing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Contributing">
+          <a href="../configuration/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Configuration">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1576,20 +1830,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Contributing
+                Configuration
               </div>
             </div>
           </a>
         
         
           
-          <a href="agents/default/" class="md-footer__link md-footer__link--next" aria-label="Next: DefaultAgent">
+          <a href="../faq/" class="md-footer__link md-footer__link--next" aria-label="Next: FAQ">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                DefaultAgent
+                FAQ
               </div>
             </div>
             <div class="md-footer__button md-icon">
