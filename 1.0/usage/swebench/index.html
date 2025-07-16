@@ -1545,12 +1545,28 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">&lt;/format_example&gt;</span>
 
 <span class="w">    </span><span class="no">Failure to follow these rules will cause your response to be rejected.</span>
-<span class="w">    </span><span class="no">To finish, issue exactly (!) the following command: `echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached`</span>
-<span class="w">    </span><span class="no">without any other command.</span>
 <span class="w">  </span><span class="nt">instance_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">Please solve this issue: {{task}}</span>
+<span class="w">    </span><span class="no">&lt;pr_description&gt;</span>
+<span class="w">    </span><span class="no">Consider the following PR pr_description: {{task}}</span>
+<span class="w">    </span><span class="no">&lt;/pr_description&gt;</span>
 
-<span class="w">    </span><span class="no">You can execute bash commands and edit files to implement the necessary changes.</span>
+<span class="w">    </span><span class="no">&lt;instructions&gt;</span>
+<span class="w">    </span><span class="no"># Task Instructions</span>
+
+<span class="w">    </span><span class="no">## Overview</span>
+<span class="w">    </span><span class="no">You&#39;re a software engineer interacting continuously with a computer by submitting commands.</span>
+<span class="w">    </span><span class="no">You&#39;ll be helping implement necessary changes to meet requirements in the PR description.</span>
+<span class="w">    </span><span class="no">Your task is specifically to make changes to non-test files in the current directory in order to fix the issue described in the PR description in a way that is general and consistent with the codebase.</span>
+
+<span class="w">    </span><span class="no">IMPORTANT: This is an interactive process where you will think and issue ONE command, see its result, then think and issue your next command.</span>
+
+<span class="w">    </span><span class="no">For each response:</span>
+<span class="w">    </span><span class="no">1. Include a THOUGHT section explaining your reasoning and what you&#39;re trying to accomplish</span>
+<span class="w">    </span><span class="no">2. Provide exactly ONE bash command to execute</span>
+
+<span class="w">    </span><span class="no">## Important Boundaries</span>
+<span class="w">    </span><span class="no">- MODIFY: Regular source code files in {{working_dir}}</span>
+<span class="w">    </span><span class="no">- DO NOT MODIFY: Tests, configuration files (pyproject.toml, setup.cfg, etc.)</span>
 
 <span class="w">    </span><span class="no">## Recommended Workflow</span>
 <span class="w">    </span><span class="no">1. Analyze the codebase by finding and reading relevant files</span>
@@ -1559,19 +1575,42 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">4. Verify your fix works by running your script again</span>
 <span class="w">    </span><span class="no">5. Test edge cases to ensure your fix is robust</span>
 
-<span class="w">    </span><span class="no">## Important Rules</span>
+<span class="w">    </span><span class="no">## Command Execution Rules</span>
+<span class="w">    </span><span class="no">You are operating in an environment where</span>
+<span class="w">    </span><span class="no">1. You write a single command</span>
+<span class="w">    </span><span class="no">2. The system executes that command in a subshell</span>
+<span class="w">    </span><span class="no">3. You see the result</span>
+<span class="w">    </span><span class="no">4. You write your next command</span>
 
-<span class="w">    </span><span class="no">1. Every response must contain exactly one action</span>
-<span class="w">    </span><span class="no">2. The action must be enclosed in triple backticks</span>
-<span class="w">    </span><span class="no">3. Directory or environment variable changes are not persistent. Every action is executed in a new subshell.</span>
-<span class="w">       </span><span class="no">However, you can prefix any action with `MY_ENV_VAR=MY_VALUE cd /path/to/working/dir &amp;&amp; ...` or write/load environment variables from files</span>
-<span class="w">    </span><span class="no">4. To finish, issue exactly (!) the following command: `echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached`</span>
-<span class="w">       </span><span class="no">without any other command.</span>
+<span class="w">    </span><span class="no">Each response should include:</span>
+<span class="w">    </span><span class="no">1. A **THOUGHT** section where you explain your reasoning and plan</span>
+<span class="w">    </span><span class="no">2. A single bash code block with your command</span>
 
-<span class="w">    </span><span class="no">## Formatting your response</span>
+<span class="w">    </span><span class="no">Format your responses like this:</span>
 
-<span class="w">    </span><span class="no">Here is an example of a correct response:</span>
+<span class="w">    </span><span class="no">&lt;format_example&gt;</span>
+<span class="w">    </span><span class="no">THOUGHT: Here I explain my reasoning process, analysis of the current situation,</span>
+<span class="w">    </span><span class="no">and what I&#39;m trying to accomplish with the command below.</span>
 
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">your_command_here</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">    </span><span class="no">&lt;/format_example&gt;</span>
+
+<span class="w">    </span><span class="no">Commands must be specified in a single bash code block:</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">your_command_here</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">**CRITICAL REQUIREMENTS:**</span>
+<span class="w">    </span><span class="no">- Your response SHOULD include a THOUGHT section explaining your reasoning</span>
+<span class="w">    </span><span class="no">- Your response MUST include EXACTLY ONE bash code block</span>
+<span class="w">    </span><span class="no">- This bash block MUST contain EXACTLY ONE command (or a set of commands connected with &amp;&amp; or ||)</span>
+<span class="w">    </span><span class="no">- If you include zero or multiple bash blocks, or no command at all, YOUR RESPONSE WILL FAIL</span>
+<span class="w">    </span><span class="no">- Do NOT try to run multiple independent commands in separate blocks in one response</span>
+
+<span class="w">    </span><span class="no">Example of a CORRECT response:</span>
 <span class="w">    </span><span class="no">&lt;example_response&gt;</span>
 <span class="w">    </span><span class="no">THOUGHT: I need to understand the structure of the repository first. Let me check what files are in the current directory to get a better understanding of the codebase.</span>
 
@@ -1580,10 +1619,38 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">```</span>
 <span class="w">    </span><span class="no">&lt;/example_response&gt;</span>
 
-<span class="w">    </span><span class="no">## Useful command examples</span>
+<span class="w">    </span><span class="no">Example of an INCORRECT response:</span>
+<span class="w">    </span><span class="no">&lt;example_response&gt;</span>
+<span class="w">    </span><span class="no">THOUGHT: I need to examine the codebase and then look at a specific file. I&#39;ll run multiple commands to do this.</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">ls -la</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">Now I&#39;ll read the file:</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">cat file.txt</span>
+<span class="w">    </span><span class="no">```</span>
+<span class="w">    </span><span class="no">&lt;/example_response&gt;</span>
+
+<span class="w">    </span><span class="no">If you need to run multiple commands, either:</span>
+<span class="w">    </span><span class="no">1. Combine them in one block using &amp;&amp; or ||</span>
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">command1 &amp;&amp; command2 || echo &quot;Error occurred&quot;</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">2. Wait for the first command to complete, see its output, then issue the next command in your following response.</span>
+
+<span class="w">    </span><span class="no">## Environment Details</span>
+<span class="w">    </span><span class="no">- You have a full Linux shell environment</span>
+<span class="w">    </span><span class="no">- Always use non-interactive flags (-y, -f) for commands</span>
+<span class="w">    </span><span class="no">- Avoid interactive tools like vi, nano, or any that require user input</span>
+<span class="w">    </span><span class="no">- If a command isn&#39;t available, you can install it</span>
+
+<span class="w">    </span><span class="no">## Useful Command Examples</span>
 
 <span class="w">    </span><span class="no">### Create a new file:</span>
-
 <span class="w">    </span><span class="no">```bash</span>
 <span class="w">    </span><span class="no">cat &lt;&lt;&#39;EOF&#39; &gt; newfile.py</span>
 <span class="w">    </span><span class="no">import numpy as np</span>
@@ -1593,7 +1660,6 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">```</span>
 
 <span class="w">    </span><span class="no">### Edit files with sed:</span>
-
 <span class="w">    </span><span class="no">```bash</span>
 <span class="w">    </span><span class="no"># Replace all occurrences</span>
 <span class="w">    </span><span class="no">sed -i &#39;s/old_string/new_string/g&#39; filename.py</span>
@@ -1609,17 +1675,27 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">```</span>
 
 <span class="w">    </span><span class="no">### View file content:</span>
-
 <span class="w">    </span><span class="no">```bash</span>
 <span class="w">    </span><span class="no"># View specific lines with numbers</span>
 <span class="w">    </span><span class="no">nl -ba filename.py | sed -n &#39;10,20p&#39;</span>
 <span class="w">    </span><span class="no">```</span>
 
 <span class="w">    </span><span class="no">### Any other command you want to run</span>
-
 <span class="w">    </span><span class="no">```bash</span>
 <span class="w">    </span><span class="no">anything</span>
 <span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">## Submission</span>
+<span class="w">    </span><span class="no">When you&#39;ve completed your changes or can&#39;t make further progress</span>
+<span class="w">    </span><span class="no">issue exactly the following command:</span>
+
+<span class="w">    </span><span class="no">```bash</span>
+<span class="w">    </span><span class="no">echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached</span>
+<span class="w">    </span><span class="no">```</span>
+
+<span class="w">    </span><span class="no">This command will submit your changes.</span>
+<span class="w">    </span><span class="no">You cannot continue working on this task after submitting.</span>
+<span class="w">    </span><span class="no">&lt;/instructions&gt;</span>
 <span class="w">  </span><span class="nt">action_observation_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">{%- set full_output -%}</span>
 <span class="w">    </span><span class="no">&lt;returncode&gt;</span>
@@ -1668,15 +1744,8 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">```</span>
 <span class="w">    </span><span class="no">&lt;/response_example&gt;</span>
 
-<span class="w">    </span><span class="no">If you want to finish, please submit your response by issuing the command</span>
-<span class="w">    </span><span class="no">shown in triple backticks in &lt;submission_example&gt;.</span>
-
-<span class="w">    </span><span class="no">&lt;submission_example&gt;</span>
-<span class="w">    </span><span class="no">```bash</span>
-<span class="w">    </span><span class="no">echo MICRO_SWE_AGENT_FINAL_OUTPUT &amp;&amp; git add -A &amp;&amp; git diff --cached</span>
-<span class="w">    </span><span class="no">```</span>
-<span class="w">    </span><span class="no">&lt;/submission_example&gt;</span>
-
+<span class="w">    </span><span class="no">If you have completed your assignment, please consult the first message about how to</span>
+<span class="w">    </span><span class="no">submit your solution (you will not be able to continue working on this task after that).</span>
 <span class="w">  </span><span class="nt">step_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.</span>
 <span class="w">  </span><span class="nt">cost_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.</span>
 
