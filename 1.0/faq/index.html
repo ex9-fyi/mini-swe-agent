@@ -711,6 +711,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1460,6 +1469,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#models" class="md-nav__link">
+    <span class="md-ellipsis">
+      Models
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1513,8 +1531,6 @@
 </details>
 <div class="admonition question">
 <p class="admonition-title">What models do you support?</p>
-<p>micro-SWE-agent supports all models that are supported by <a href="https://github.com/BerriAI/litellm">litellm</a>
-and we're open to extend the <code>models/</code> directory with more models should <code>litellm</code> not support them.</p>
 </div>
 <details class="question">
 <summary>What are the limitations of micro-SWE-agent?</summary>
@@ -1529,6 +1545,40 @@ As reflected in the high SWE-bench scores, none of the following limitations are
 </ul>
 <p>If you want more flexibility with these items, you can use <a href="https://swe-agent.com/">SWE-agent</a> instead.</p>
 </details>
+<details class="question">
+<summary>Where is global configuration stored?</summary>
+<p>The global configuration is stored in the <code>.env</code> file in the config directory.
+The location is printed when you run <code>micro --help</code>.</p>
+<p>The <code>.env</code> file is a simple key-value file that is read by the <code>dotenv</code> library.</p>
+</details>
+<h2 id="models">Models</h2>
+<div class="admonition question">
+<p class="admonition-title">What models do you support?</p>
+<p>Currently, micro-SWE-agent supports all models that are supported by <a href="https://github.com/BerriAI/litellm">litellm</a>
+and we're open to extend the <code>models/</code> directory with more models should <code>litellm</code> not support them.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">How do I set the API key for a model?</p>
+<p>The API key can be stored either as an environment variable (note that enviroinment variables are not persistent
+unless you set them in your <code>~/.bashrc</code> or similar), or as a permanent key in the config file.</p>
+<p>To temporarily set the API key as an environment variable, you can use the following command:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-test123
+</code></pre></div>
+<p>To permanently set the API key in the config file, you can use the following command:</p>
+<div class="highlight"><pre><span></span><code>micro<span class="w"> </span>set-key<span class="w"> </span>OPENAI_API_KEY<span class="w"> </span>sk-test123
+</code></pre></div>
+<p>Alternatively, you can directly edit the <code>.env</code> file in the config directory
+(the location is printed when you run <code>micro --help</code>).</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">How can I set the default model?</p>
+<p>The default model is stored in the config/environment as <code>MSWEA_MODEL_NAME</code>.
+To permanently change it:</p>
+<div class="highlight"><pre><span></span><code>micro<span class="w"> </span>set-key<span class="w"> </span>MSWEA_MODEL_NAME<span class="w"> </span>claude-sonnet-4-20250514
+</code></pre></div>
+<p>Alternatively, you can directly edit the <code>.env</code> file in the config directory
+(the location is printed when you run <code>micro --help</code>).</p>
+</div>
 <div class="grid cards">
 <ul>
 <li>
