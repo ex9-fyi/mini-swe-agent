@@ -1879,7 +1879,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
             <span class="c1"># We always add a message about the interrupt and then just proceed to the next step</span>
             <span class="n">interruption_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt_and_handle_special</span><span class="p">(</span>
                 <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[bold yellow]Interrupted.[/bold yellow] &quot;</span>
-                <span class="s2">&quot;[bold green]/h[/bold green] to show help, or [green]continue with comment/command[/green]&quot;</span>
+                <span class="s2">&quot;[green]type a comment/command[/green] (/h for available commands)&quot;</span>
                 <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[bold yellow]&gt;[/bold yellow] &quot;</span>
             <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">interruption_message</span> <span class="ow">or</span> <span class="n">interruption_message</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MODE_COMMANDS_MAPPING</span><span class="p">:</span>
@@ -1898,8 +1898,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
     <span class="k">def</span><span class="w"> </span><span class="nf">ask_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">prompt</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;[bold yellow]Execute?[/bold yellow] [green][bold]Enter[/bold] to confirm[/green], &quot;</span>
-            <span class="s2">&quot;[green bold]/h[/green bold] for help, &quot;</span>
-            <span class="s2">&quot;or [green]enter comment/command[/green]</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;or [green]type a comment/command[/green] (/h for available commands)</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="s2">&quot;[bold yellow]&gt;[/bold yellow] &quot;</span>
         <span class="p">)</span>
         <span class="k">match</span> <span class="n">user_input</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt_and_handle_special</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
