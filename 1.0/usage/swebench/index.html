@@ -1895,7 +1895,6 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
         <span class="n">extra_info</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()}</span>
-        <span class="k">raise</span> <span class="n">e</span>
     <span class="k">finally</span><span class="p">:</span>
         <span class="n">save_traj</span><span class="p">(</span>
             <span class="n">agent</span><span class="p">,</span>
