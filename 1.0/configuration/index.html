@@ -667,9 +667,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#anthropic-models" class="md-nav__link">
+  <a href="#models-and-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Anthropic Models
+      Models and keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-config-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default config files
     </span>
   </a>
   
@@ -681,9 +690,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration-files" class="md-nav__link">
+  <a href="#default-run-files" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration files
+      Default run files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent configuration files
     </span>
   </a>
   
@@ -1486,9 +1504,18 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#anthropic-models" class="md-nav__link">
+  <a href="#models-and-keys" class="md-nav__link">
     <span class="md-ellipsis">
-      Anthropic Models
+      Models and keys
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-config-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default config files
     </span>
   </a>
   
@@ -1500,9 +1527,18 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#configuration-files" class="md-nav__link">
+  <a href="#default-run-files" class="md-nav__link">
     <span class="md-ellipsis">
-      Configuration files
+      Default run files
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-configuration-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      Agent configuration files
     </span>
   </a>
   
@@ -1540,21 +1576,37 @@
 <p class="admonition-title">Precedence</p>
 <p>Environment variables take precedence over variables set in the <code>.env</code> file.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="c1"># Default run script entry point for the main CLI</span>
-<span class="c1"># (default: &quot;microsweagent.run.local&quot;)</span>
-<span class="nv">MSWEA_DEFAULT_RUN</span><span class="o">=</span><span class="s2">&quot;microsweagent.run.local&quot;</span>
+<h3 id="models-and-keys">Models and keys</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Default model name</span>
+<span class="c1"># (default: not set)</span>
+<span class="nv">MSWEA_MODEL_NAME</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-20250514&quot;</span>
 
-<span class="c1"># Config path for GitHub issue script</span>
-<span class="c1"># (default: package_dir / &quot;config&quot; / &quot;github_issue.yaml&quot;)</span>
-<span class="nv">MSWEA_GITHUB_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;/path/to/your/github/config.yaml&quot;</span>
-
-<span class="c1"># Global limit on number of model calls (0 = no limit)</span>
+<span class="c1"># Default API key</span>
+<span class="c1"># (default: not set)</span>
+<span class="nv">MSWEA_MODEL_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span>
+</code></pre></div>
+<p>For Anthropic models, you can also use <code>ANTHROPIC_API_KEYS</code> for advanced parallel execution:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Multiple Anthropic keys for parallel execution (separated by &quot;::&quot;)</span>
+<span class="nv">ANTHROPIC_API_KEYS</span><span class="o">=</span><span class="s2">&quot;key1::key2::key3&quot;</span>
+</code></pre></div>
+<p>This allows different threads to use different API keys to avoid prompt caching conflicts when running multiple agents in parallel.</p>
+<p>Global cost limits:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Global limit on number of model calls (0 = no limit)</span>
 <span class="c1"># (default: 0)</span>
 <span class="nv">MSWEA_GLOBAL_CALL_LIMIT</span><span class="o">=</span><span class="s2">&quot;100&quot;</span>
 
 <span class="c1"># Global cost limit in dollars (0 = no limit)</span>
 <span class="c1"># (default: 0)</span>
 <span class="nv">MSWEA_GLOBAL_COST_LIMIT</span><span class="o">=</span><span class="s2">&quot;10.00&quot;</span>
+</code></pre></div>
+<h3 id="default-config-files">Default config files</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Set a custom directory for agent config files in addition to the builtin ones</span>
+<span class="c1"># This allows to specify them by names</span>
+<span class="nv">MSWEA_CONFIG_DIR</span><span class="o">=</span><span class="s2">&quot;/path/to/your/own/config/dir&quot;</span>
+
+<span class="c1"># Config path for GitHub issue script</span>
+<span class="c1"># (default: package_dir / &quot;config&quot; / &quot;github_issue.yaml&quot;)</span>
+<span class="nv">MSWEA_GITHUB_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;/path/to/your/github/config.yaml&quot;</span>
 
 <span class="c1"># Custom style path for trajectory inspector</span>
 <span class="c1"># (default: package_dir / &quot;config&quot; / &quot;local2.tcss&quot;)</span>
@@ -1571,22 +1623,13 @@
 <span class="c1"># Config path for local run script</span>
 <span class="c1"># (default: package_dir / &quot;config&quot; / &quot;local.yaml&quot;)</span>
 <span class="nv">MSWEA_LOCAL_CONFIG_PATH</span><span class="o">=</span><span class="s2">&quot;/path/to/your/own/config&quot;</span>
-
-<span class="c1"># Default model name</span>
-<span class="c1"># (default: not set)</span>
-<span class="nv">MSWEA_MODEL_NAME</span><span class="o">=</span><span class="s2">&quot;claude-sonnet-4-20250514&quot;</span>
-
-<span class="c1"># Default API key</span>
-<span class="c1"># (default: not set)</span>
-<span class="nv">MSWEA_MODEL_API_KEY</span><span class="o">=</span><span class="s2">&quot;sk-...&quot;</span>
 </code></pre></div>
-<h3 id="anthropic-models">Anthropic Models</h3>
-<p>For Anthropic models, you can also use <code>ANTHROPIC_API_KEYS</code> for advanced parallel execution:</p>
-<div class="highlight"><pre><span></span><code><span class="c1"># Multiple Anthropic keys for parallel execution (separated by &quot;::&quot;)</span>
-<span class="nv">ANTHROPIC_API_KEYS</span><span class="o">=</span><span class="s2">&quot;key1::key2::key3&quot;</span>
+<h2 id="default-run-files">Default run files</h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># Default run script entry point for the main CLI</span>
+<span class="c1"># (default: &quot;microsweagent.run.local&quot;)</span>
+<span class="nv">MSWEA_DEFAULT_RUN</span><span class="o">=</span><span class="s2">&quot;microsweagent.run.local&quot;</span>
 </code></pre></div>
-<p>This allows different threads to use different API keys to avoid prompt caching conflicts when running multiple agents in parallel.</p>
-<h2 id="configuration-files">Configuration files</h2>
+<h2 id="agent-configuration-files">Agent configuration files</h2>
 <p>Configuration files look like this:</p>
 <details class="note">
 <summary>Configuration file</summary>
