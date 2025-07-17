@@ -1609,6 +1609,8 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">- This bash block MUST contain EXACTLY ONE command (or a set of commands connected with &amp;&amp; or ||)</span>
 <span class="w">    </span><span class="no">- If you include zero or multiple bash blocks, or no command at all, YOUR RESPONSE WILL FAIL</span>
 <span class="w">    </span><span class="no">- Do NOT try to run multiple independent commands in separate blocks in one response</span>
+<span class="w">    </span><span class="no">- Directory or environment variable changes are not persistent. Every action is executed in a new subshell.</span>
+<span class="w">    </span><span class="no">- However, you can prefix any action with `MY_ENV_VAR=MY_VALUE cd /path/to/working/dir &amp;&amp; ...` or write/load environment variables from files</span>
 
 <span class="w">    </span><span class="no">Example of a CORRECT response:</span>
 <span class="w">    </span><span class="no">&lt;example_response&gt;</span>
