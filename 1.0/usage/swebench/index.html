@@ -1708,19 +1708,11 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">You cannot continue working on this task after submitting.</span>
 <span class="w">    </span><span class="no">&lt;/instructions&gt;</span>
 <span class="w">  </span><span class="nt">action_observation_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">{%- set full_output -%}</span>
-<span class="w">    </span><span class="no">&lt;returncode&gt;</span>
-<span class="w">    </span><span class="no">{{output.returncode}}</span>
-<span class="w">    </span><span class="no">&lt;/returncode&gt;</span>
-<span class="w">    </span><span class="no">&lt;stderr&gt;</span>
-<span class="w">    </span><span class="no">{{output.stderr}}</span>
-<span class="w">    </span><span class="no">&lt;/stderr&gt;</span>
-<span class="w">    </span><span class="no">&lt;stdout&gt;</span>
-<span class="w">    </span><span class="no">{{output.stdout}}</span>
-<span class="w">    </span><span class="no">&lt;/stdout&gt;</span>
-<span class="w">    </span><span class="no">{%- endset -%}</span>
-<span class="w">    </span><span class="no">{%- if full_output | length &lt; 10000 -%}</span>
-<span class="w">    </span><span class="no">{{ full_output }}</span>
+<span class="w">    </span><span class="no">&lt;returncode&gt;{{output.returncode}}&lt;/returncode&gt;</span>
+<span class="w">    </span><span class="no">{% if output.output | length &lt; 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;output&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output -}}</span>
+<span class="w">    </span><span class="no">&lt;/output&gt;</span>
 <span class="w">    </span><span class="no">{%- else -%}</span>
 <span class="w">    </span><span class="no">&lt;warning&gt;</span>
 <span class="w">    </span><span class="no">The output of your last command was too long.</span>
@@ -1729,18 +1721,16 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">If you&#39;re using grep or find and it produced too much output, you can use a more selective search pattern.</span>
 <span class="w">    </span><span class="no">If you really need to see something from the full command&#39;s output, you can redirect output to a file and then search in that file.</span>
 <span class="w">    </span><span class="no">&lt;/warning&gt;</span>
-<span class="w">    </span><span class="no">{%- set elided_chars = full_output | length - 10000 -%}</span>
-<span class="w">    </span><span class="no">&lt;observation_head&gt;</span>
-<span class="w">    </span><span class="no">{{ full_output[:5000] }}</span>
-<span class="w">    </span><span class="no">&lt;/observation_head&gt;</span>
-
+<span class="w">    </span><span class="no">{%- set elided_chars = output.output | length - 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;output_head&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output[:5000] }}</span>
+<span class="w">    </span><span class="no">&lt;/output_head&gt;</span>
 <span class="w">    </span><span class="no">&lt;elided_chars&gt;</span>
 <span class="w">    </span><span class="no">{{ elided_chars }} characters elided</span>
 <span class="w">    </span><span class="no">&lt;/elided_chars&gt;</span>
-
-<span class="w">    </span><span class="no">&lt;observation_tail&gt;</span>
-<span class="w">    </span><span class="no">{{ full_output[-5000:] }}</span>
-<span class="w">    </span><span class="no">&lt;/observation_tail&gt;</span>
+<span class="w">    </span><span class="no">&lt;output_tail&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output[-5000:] }}</span>
+<span class="w">    </span><span class="no">&lt;/output_tail&gt;</span>
 <span class="w">    </span><span class="no">{%- endif -%}</span>
 <span class="w">  </span><span class="nt">format_error_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">Please always provide EXACTLY ONE action in triple backticks, found {{actions|length}} actions.</span>

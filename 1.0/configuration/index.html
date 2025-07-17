@@ -1726,19 +1726,11 @@
 <span class="w">    </span><span class="no">anything</span>
 <span class="w">    </span><span class="no">```</span>
 <span class="w">  </span><span class="nt">action_observation_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">{%- set full_output -%}</span>
-<span class="w">    </span><span class="no">&lt;returncode&gt;</span>
-<span class="w">    </span><span class="no">{{output.returncode}}</span>
-<span class="w">    </span><span class="no">&lt;/returncode&gt;</span>
-<span class="w">    </span><span class="no">&lt;stderr&gt;</span>
-<span class="w">    </span><span class="no">{{output.stderr}}</span>
-<span class="w">    </span><span class="no">&lt;/stderr&gt;</span>
-<span class="w">    </span><span class="no">&lt;stdout&gt;</span>
-<span class="w">    </span><span class="no">{{output.stdout}}</span>
-<span class="w">    </span><span class="no">&lt;/stdout&gt;</span>
-<span class="w">    </span><span class="no">{%- endset -%}</span>
-<span class="w">    </span><span class="no">{%- if full_output | length &lt; 10000 -%}</span>
-<span class="w">    </span><span class="no">{{ full_output }}</span>
+<span class="w">    </span><span class="no">&lt;returncode&gt;{{output.returncode}}&lt;/returncode&gt;</span>
+<span class="w">    </span><span class="no">{% if output.output | length &lt; 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;output&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output -}}</span>
+<span class="w">    </span><span class="no">&lt;/output&gt;</span>
 <span class="w">    </span><span class="no">{%- else -%}</span>
 <span class="w">    </span><span class="no">&lt;warning&gt;</span>
 <span class="w">    </span><span class="no">The output of your last command was too long.</span>
@@ -1747,18 +1739,16 @@
 <span class="w">    </span><span class="no">If you&#39;re using grep or find and it produced too much output, you can use a more selective search pattern.</span>
 <span class="w">    </span><span class="no">If you really need to see something from the full command&#39;s output, you can redirect output to a file and then search in that file.</span>
 <span class="w">    </span><span class="no">&lt;/warning&gt;</span>
-<span class="w">    </span><span class="no">{%- set elided_chars = full_output | length - 10000 -%}</span>
-<span class="w">    </span><span class="no">&lt;observation_head&gt;</span>
-<span class="w">    </span><span class="no">{{ full_output[:5000] }}</span>
-<span class="w">    </span><span class="no">&lt;/observation_head&gt;</span>
-
+<span class="w">    </span><span class="no">{%- set elided_chars = output.output | length - 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;output_head&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output[:5000] }}</span>
+<span class="w">    </span><span class="no">&lt;/output_head&gt;</span>
 <span class="w">    </span><span class="no">&lt;elided_chars&gt;</span>
 <span class="w">    </span><span class="no">{{ elided_chars }} characters elided</span>
 <span class="w">    </span><span class="no">&lt;/elided_chars&gt;</span>
-
-<span class="w">    </span><span class="no">&lt;observation_tail&gt;</span>
-<span class="w">    </span><span class="no">{{ full_output[-5000:] }}</span>
-<span class="w">    </span><span class="no">&lt;/observation_tail&gt;</span>
+<span class="w">    </span><span class="no">&lt;output_tail&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output[-5000:] }}</span>
+<span class="w">    </span><span class="no">&lt;/output_tail&gt;</span>
 <span class="w">    </span><span class="no">{%- endif -%}</span>
 <span class="w">  </span><span class="nt">format_error_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">Please always provide EXACTLY ONE action in triple backticks, found {{actions|length}} actions.</span>
@@ -1789,38 +1779,33 @@
 TL;DR: You include variables with double curly braces, e.g. <code>{{task}}</code>, but you can also do fairly complicated logic like this:</p>
 <details class="note">
 <summary>Example: Dealing with long observations</summary>
-<div class="highlight"><pre><span></span><code><span class="cp">{%</span>- <span class="k">set</span> <span class="nv">full_output</span> -<span class="cp">%}</span>
-<span class="x">    &lt;returncode&gt;</span>
-<span class="x">        </span><span class="cp">{{</span><span class="nv">output.returncode</span><span class="cp">}}</span>
-<span class="x">    &lt;/returncode&gt;</span>
-<span class="x">    &lt;stderr&gt;</span>
-<span class="x">        </span><span class="cp">{{</span><span class="nv">output.stderr</span><span class="cp">}}</span>
-<span class="x">    &lt;/stderr&gt;</span>
-<span class="x">    &lt;stdout&gt;</span>
-<span class="x">        </span><span class="cp">{{</span><span class="nv">output.stdout</span><span class="cp">}}</span>
-<span class="x">    &lt;/stdout&gt;</span>
-<span class="cp">{%</span>- <span class="k">endset</span> -<span class="cp">%}</span>
-
-<span class="cp">{%</span>- <span class="k">if</span> <span class="nv">full_output</span> <span class="o">|</span> <span class="nf">length</span> <span class="o">&lt;</span> <span class="m">10000</span> -<span class="cp">%}</span>
-<span class="x">    </span><span class="cp">{{</span> <span class="nv">full_output</span> <span class="cp">}}</span>
+<div class="highlight"><pre><span></span><code><span class="x">&lt;returncode&gt;</span><span class="cp">{{</span><span class="nv">output.returncode</span><span class="cp">}}</span><span class="x">&lt;/returncode&gt;</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">output.output</span> <span class="o">|</span> <span class="nf">length</span> <span class="o">&lt;</span> <span class="m">10000</span> -<span class="cp">%}</span>
+<span class="x">    &lt;output&gt;</span>
+<span class="x">        </span><span class="cp">{{</span> <span class="nv">output.output</span> -<span class="cp">}}</span>
+<span class="x">    &lt;/output&gt;</span>
 <span class="cp">{%</span>- <span class="k">else</span> -<span class="cp">%}</span>
 <span class="x">    &lt;warning&gt;</span>
 <span class="x">        The output of your last command was too long.</span>
+<span class="x">        Please try a different command that produces less output.</span>
+<span class="x">        If you&#39;re looking at a file you can try use head, tail or sed to view a smaller number of lines selectively.</span>
+<span class="x">        If you&#39;re using grep or find and it produced too much output, you can use a more selective search pattern.</span>
+<span class="x">        If you really need to see something from the full command&#39;s output, you can redirect output to a file and then search in that file.</span>
 <span class="x">    &lt;/warning&gt;</span>
 
-<span class="x">    </span><span class="cp">{%</span>- <span class="k">set</span> <span class="nv">elided_chars</span> <span class="o">=</span> <span class="nv">full_output</span> <span class="o">|</span> <span class="nf">length</span> <span class="o">-</span> <span class="m">10000</span> -<span class="cp">%}</span>
+<span class="x">    </span><span class="cp">{%</span>- <span class="k">set</span> <span class="nv">elided_chars</span> <span class="o">=</span> <span class="nv">output.output</span> <span class="o">|</span> <span class="nf">length</span> <span class="o">-</span> <span class="m">10000</span> -<span class="cp">%}</span>
 
-<span class="x">    &lt;observation_head&gt;</span>
-<span class="x">        </span><span class="cp">{{</span> <span class="nv">full_output</span><span class="o">[:</span><span class="m">5000</span><span class="o">]</span> <span class="cp">}}</span>
-<span class="x">    &lt;/observation_head&gt;</span>
+<span class="x">    &lt;output_head&gt;</span>
+<span class="x">        </span><span class="cp">{{</span> <span class="nv">output.output</span><span class="o">[:</span><span class="m">5000</span><span class="o">]</span> <span class="cp">}}</span>
+<span class="x">    &lt;/output_head&gt;</span>
 
 <span class="x">    &lt;elided_chars&gt;</span>
 <span class="x">        </span><span class="cp">{{</span> <span class="nv">elided_chars</span> <span class="cp">}}</span><span class="x"> characters elided</span>
 <span class="x">    &lt;/elided_chars&gt;</span>
 
-<span class="x">    &lt;observation_tail&gt;</span>
-<span class="x">        </span><span class="cp">{{</span> <span class="nv">full_output</span><span class="o">[-</span><span class="m">5000</span><span class="o">:]</span> <span class="cp">}}</span>
-<span class="x">    &lt;/observation_tail&gt;</span>
+<span class="x">    &lt;output_tail&gt;</span>
+<span class="x">        </span><span class="cp">{{</span> <span class="nv">output.output</span><span class="o">[-</span><span class="m">5000</span><span class="o">:]</span> <span class="cp">}}</span>
+<span class="x">    &lt;/output_tail&gt;</span>
 <span class="cp">{%</span>- <span class="k">endif</span> -<span class="cp">%}</span>
 </code></pre></div>
 </details>

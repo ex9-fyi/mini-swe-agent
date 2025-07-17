@@ -1526,7 +1526,8 @@
 <h1 id="micro"><code>micro</code></h1>
 <p><code>micro</code> is a REPL-style interactive command line interface for using micro-SWE-agent in the local requirement (as opposed for workflows that require sandboxing or large scale batch processing).
 Compared to <a href="../micro2/"><code>micro2</code></a>, <code>micro</code> is more lightweight and does not require threading.</p>
-<p>VIDEO HERE TODO</p>
+<iframe width="800" height="572" src="https://www.youtube.com/embed/dl_Sg79gKzY" title="micro-swe-agent" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" controls=0 modestbranding=1 rel=0></iframe>
+
 <div class="admonition tip">
 <p class="admonition-title">Feedback wanted!</p>
 <p>Give feedback on the <code>micro</code> and <code>micro2</code> interfaces at <a href="https://github.com/swe-agent/micro-swe-agent/issues/161">this github issue</a>
@@ -1650,19 +1651,11 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 <span class="w">    </span><span class="no">anything</span>
 <span class="w">    </span><span class="no">```</span>
 <span class="w">  </span><span class="nt">action_observation_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">{%- set full_output -%}</span>
-<span class="w">    </span><span class="no">&lt;returncode&gt;</span>
-<span class="w">    </span><span class="no">{{output.returncode}}</span>
-<span class="w">    </span><span class="no">&lt;/returncode&gt;</span>
-<span class="w">    </span><span class="no">&lt;stderr&gt;</span>
-<span class="w">    </span><span class="no">{{output.stderr}}</span>
-<span class="w">    </span><span class="no">&lt;/stderr&gt;</span>
-<span class="w">    </span><span class="no">&lt;stdout&gt;</span>
-<span class="w">    </span><span class="no">{{output.stdout}}</span>
-<span class="w">    </span><span class="no">&lt;/stdout&gt;</span>
-<span class="w">    </span><span class="no">{%- endset -%}</span>
-<span class="w">    </span><span class="no">{%- if full_output | length &lt; 10000 -%}</span>
-<span class="w">    </span><span class="no">{{ full_output }}</span>
+<span class="w">    </span><span class="no">&lt;returncode&gt;{{output.returncode}}&lt;/returncode&gt;</span>
+<span class="w">    </span><span class="no">{% if output.output | length &lt; 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;output&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output -}}</span>
+<span class="w">    </span><span class="no">&lt;/output&gt;</span>
 <span class="w">    </span><span class="no">{%- else -%}</span>
 <span class="w">    </span><span class="no">&lt;warning&gt;</span>
 <span class="w">    </span><span class="no">The output of your last command was too long.</span>
@@ -1671,18 +1664,16 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 <span class="w">    </span><span class="no">If you&#39;re using grep or find and it produced too much output, you can use a more selective search pattern.</span>
 <span class="w">    </span><span class="no">If you really need to see something from the full command&#39;s output, you can redirect output to a file and then search in that file.</span>
 <span class="w">    </span><span class="no">&lt;/warning&gt;</span>
-<span class="w">    </span><span class="no">{%- set elided_chars = full_output | length - 10000 -%}</span>
-<span class="w">    </span><span class="no">&lt;observation_head&gt;</span>
-<span class="w">    </span><span class="no">{{ full_output[:5000] }}</span>
-<span class="w">    </span><span class="no">&lt;/observation_head&gt;</span>
-
+<span class="w">    </span><span class="no">{%- set elided_chars = output.output | length - 10000 -%}</span>
+<span class="w">    </span><span class="no">&lt;output_head&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output[:5000] }}</span>
+<span class="w">    </span><span class="no">&lt;/output_head&gt;</span>
 <span class="w">    </span><span class="no">&lt;elided_chars&gt;</span>
 <span class="w">    </span><span class="no">{{ elided_chars }} characters elided</span>
 <span class="w">    </span><span class="no">&lt;/elided_chars&gt;</span>
-
-<span class="w">    </span><span class="no">&lt;observation_tail&gt;</span>
-<span class="w">    </span><span class="no">{{ full_output[-5000:] }}</span>
-<span class="w">    </span><span class="no">&lt;/observation_tail&gt;</span>
+<span class="w">    </span><span class="no">&lt;output_tail&gt;</span>
+<span class="w">    </span><span class="no">{{ output.output[-5000:] }}</span>
+<span class="w">    </span><span class="no">&lt;/output_tail&gt;</span>
 <span class="w">    </span><span class="no">{%- endif -%}</span>
 <span class="w">  </span><span class="nt">format_error_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">Please always provide EXACTLY ONE action in triple backticks, found {{actions|length}} actions.</span>
