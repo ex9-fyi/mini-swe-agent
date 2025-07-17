@@ -1514,6 +1514,15 @@
 </ul>
 <h2 id="faq">FAQ</h2>
 <blockquote>
+<p>What happens to uncompleted tasks when I abort with KeyboardInterrupt?</p>
+</blockquote>
+<p>Trajectories are only saved upon completion, so most likely, you can just rerun the script to complete the tasks next time.
+However, you should still check for <code>KeyboardInterrupt</code> in <code>preds.json</code> in case some tasks were aborted but saved.</p>
+<blockquote>
+<p>Certain tasks are being stuck even though I deleted the trajectories.</p>
+</blockquote>
+<p>The completed instances are inferred from <code>preds.json</code>. Remove the corresponding items from the file.</p>
+<blockquote>
 <p>How can I run on a different dataset?</p>
 </blockquote>
 <p>As long as it follows the SWE-bench format, you can use <code>--subset /path/to/your/dataset</code> to run on a custom dataset.
