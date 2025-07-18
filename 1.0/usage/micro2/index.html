@@ -1912,7 +1912,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">global_config_dir</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentConfig</span><span class="p">,</span> <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">LimitsExceeded</span><span class="p">,</span> <span class="n">NonTerminatingException</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentConfig</span><span class="p">,</span> <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">LimitsExceeded</span><span class="p">,</span> <span class="n">NonTerminatingException</span><span class="p">,</span> <span class="n">Submitted</span>
 
 <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">highlight</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">prompt_session</span> <span class="o">=</span> <span class="n">PromptSession</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">FileHistory</span><span class="p">(</span><span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;interactive_history.txt&quot;</span><span class="p">))</span>
@@ -2028,6 +2028,20 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
             <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Switched to [bold green]</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">[/bold green] mode.&quot;</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">user_input</span>
         <span class="k">return</span> <span class="n">user_input</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">has_finished</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">has_finished</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Submitted</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
+                <span class="s2">&quot;[bold green]Agent wants to finish.[/bold green] &quot;</span>
+                <span class="s2">&quot;[green]Type a comment to give it a new task or press enter to quit.</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="s2">&quot;[bold yellow]&gt;[/bold yellow] &quot;</span><span class="p">,</span>
+                <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">new_task</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt_and_handle_special</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="n">NonTerminatingException</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The user added a new task: </span><span class="si">{</span><span class="n">new_task</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">e</span>
 </code></pre></div>
 </details>
 <div class="grid cards">
