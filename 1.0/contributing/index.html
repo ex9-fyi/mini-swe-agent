@@ -378,8 +378,6 @@
       
         
       
-        
-      
     
     
     
@@ -606,8 +604,55 @@
   
   
   
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
-      <a href="../configuration/" class="md-nav__link">
+      <a href="../advanced/configuration/" class="md-nav__link">
         
   
   
@@ -630,7 +675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cookbook/" class="md-nav__link">
+      <a href="../advanced/cookbook/" class="md-nav__link">
         
   
   
@@ -641,6 +686,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1485,7 +1538,7 @@
 <li>Feedback on the <code>micro</code> and <code>micro2</code> interfaces at <a href="https://github.com/swe-agent/micro-swe-agent/issues/161">this github issue</a> or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s-o3_yXPZbaH2wVnxnss1EkQ">Slack channel</a>.</li>
 <li>Documentation, examples, tutorials, etc. In particular, we're looking for<ul>
 <li>examples of how this library is used in the wild</li>
-<li>additional examples for the <a href="../cookbook/">cookbook</a></li>
+<li>additional examples for the <a href="../advanced/cookbook/">cookbook</a></li>
 </ul>
 </li>
 <li>Support for more models (anything where <code>litellm</code> doesn't work out of the box)</li>
@@ -1495,7 +1548,7 @@
 <h2 id="design-architecture">Design &amp; Architecture</h2>
 <ul>
 <li><code>micro-swe-agent</code> aims to stay minimalistic, hackable, and of high quality code.</li>
-<li>To extend features, we prefer to add a new version of the one of the four components (see <a href="../cookbook/">cookbook</a>), rather than making the existing components more complex.</li>
+<li>To extend features, we prefer to add a new version of the one of the four components (see <a href="../advanced/cookbook/">cookbook</a>), rather than making the existing components more complex.</li>
 <li>Components should be relatively self-contained, but if there are utilities that might be shared, add a <code>utils</code> folder (like <a href="https://github.com/SWE-agent/micro-swe-agent/tree/main/src/microsweagent/models/utils">this one</a>). But keep it simple!</li>
 <li>If your component is a bit more specific, add it into an <code>extra</code> folder (like <a href="https://github.com/SWE-agent/micro-swe-agent/tree/main/src/microsweagent/run/extra">this one</a>)</li>
 <li>Our target audience is anyone who doesn't shy away from modifying a bit of code (especially a run script) to get what they want.</li>
