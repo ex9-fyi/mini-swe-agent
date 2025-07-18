@@ -1256,8 +1256,6 @@
       
         
       
-        
-      
     
     
     
@@ -1322,35 +1320,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reference/run/local/" class="md-nav__link">
+      <a href="../../reference/run/micro/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Local
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/run/local2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Local2 (Textual)
+    micro
     
   </span>
   
@@ -1689,7 +1664,7 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 <span class="w">    </span><span class="no">```</span>
 <span class="w">    </span><span class="no">&lt;/response_example&gt;</span>
 <span class="w">  </span><span class="nt">step_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.</span>
-<span class="w">  </span><span class="nt">cost_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.</span>
+<span class="w">  </span><span class="nt">cost_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3.</span>
 <span class="w">  </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">confirm</span>
 <span class="nt">environment</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">env</span><span class="p">:</span>
@@ -1703,18 +1678,22 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 <details class="note">
 <summary>Run script</summary>
 <ul>
-<li><a href="https://github.com/swe-agent/micro-swe-agent/blob/main/src/microsweagent/run/local.py">Read on GitHub</a></li>
-<li><a href="../../reference/run/local/">API reference</a></li>
+<li><a href="https://github.com/swe-agent/micro-swe-agent/blob/main/src/microsweagent/run/micro.py">Read on GitHub</a></li>
+<li><a href="../../reference/run/micro/">API reference</a></li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">typer</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">Model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive</span><span class="w"> </span><span class="kn">import</span> <span class="n">InteractiveAgent</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive_textual</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentApp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">builtin_config_dir</span><span class="p">,</span> <span class="n">get_config_path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.environments.local</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocalEnvironment</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
@@ -1741,6 +1720,39 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
     <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
 
 
+<span class="k">def</span><span class="w"> </span><span class="nf">run_interactive</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="n">agent</span> <span class="o">=</span> <span class="n">InteractiveAgent</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">env</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">agent_config</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[bold red]KeyboardInterrupt -- goodbye[/bold red]&quot;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">save_traj</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">agent</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run_textual</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+    <span class="n">agent_app</span> <span class="o">=</span> <span class="n">AgentApp</span><span class="p">(</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">env</span><span class="p">,</span>
+        <span class="n">task</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">agent_config</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">agent_app</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="n">typer</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">KeyboardInterrupt -- goodbye&quot;</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">save_traj</span><span class="p">(</span><span class="n">agent_app</span><span class="o">.</span><span class="n">agent</span><span class="p">,</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;traj.json&quot;</span><span class="p">),</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">agent_app</span><span class="o">.</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">agent_app</span><span class="o">.</span><span class="n">result</span><span class="p">)</span>
+
+
 <span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">DEFAULT_CONFIG</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to config file&quot;</span><span class="p">),</span>
@@ -1753,7 +1765,8 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
     <span class="n">task</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-t&quot;</span><span class="p">,</span> <span class="s2">&quot;--task&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Task/problem statement&quot;</span><span class="p">,</span> <span class="n">show_default</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
     <span class="n">yolo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;--yolo&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run without confirmation&quot;</span><span class="p">),</span>
     <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output file&quot;</span><span class="p">),</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">InteractiveAgent</span><span class="p">:</span>
+    <span class="n">visual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--visual&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use visual UI (Textual)&quot;</span><span class="p">),</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Run micro-SWE-agent right here, right now.&quot;&quot;&quot;</span>
     <span class="n">_config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
 
@@ -1762,23 +1775,14 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 
     <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;confirm&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">yolo</span> <span class="k">else</span> <span class="s2">&quot;yolo&quot;</span>
 
-    <span class="c1"># Use get_model to defer model imports (can take a while), but also to switch in</span>
-    <span class="c1"># some optimized models (especially for anthropic)</span>
-    <span class="n">agent</span> <span class="o">=</span> <span class="n">InteractiveAgent</span><span class="p">(</span>
-        <span class="n">get_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{})),</span>
-        <span class="n">LocalEnvironment</span><span class="p">(),</span>
-        <span class="o">**</span><span class="p">(</span><span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">}),</span>
-    <span class="p">)</span>
+    <span class="n">_model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">LocalEnvironment</span><span class="p">(</span><span class="o">**</span><span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="p">{}))</span>
+    <span class="n">agent_config</span> <span class="o">=</span> <span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">}</span>
 
-    <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span> <span class="o">=</span> <span class="n">agent</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[bold red]KeyboardInterrupt -- goodbye[/bold red]&quot;</span><span class="p">)</span>
-    <span class="k">finally</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
-            <span class="n">save_traj</span><span class="p">(</span><span class="n">agent</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">exit_status</span><span class="o">=</span><span class="n">exit_status</span><span class="p">,</span> <span class="n">result</span><span class="o">=</span><span class="n">result</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">agent</span>
+    <span class="k">if</span> <span class="n">visual</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">run_textual</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">run_interactive</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>

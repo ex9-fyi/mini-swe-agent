@@ -1293,8 +1293,6 @@
       
         
       
-        
-      
     
     
     
@@ -1359,35 +1357,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/run/local/" class="md-nav__link">
+      <a href="../reference/run/micro/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    Local
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../reference/run/local2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Local2 (Textual)
+    micro
     
   </span>
   
@@ -1602,14 +1577,14 @@
 <h1 id="cookbook">Cookbook</h1>
 <p>We provide several different entry points to the agent,
 for example <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/hello_world.py">hello world</a>,
-or the <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/local.py">default when calling <code>micro</code></a>.</p>
+or the <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/micro.py">default when calling <code>micro</code></a>.</p>
 <p>Want to cook up your custom version and the config is not enough?
 Just follow the recipe below:</p>
 <ol>
 <li>What's the control flow you need? Pick an <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents">agent class</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents/default.py">simplest example</a>, <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/agents/interactive.py">with human in the loop</a>)</li>
 <li>How should actions be executed? Pick an <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments">environment class</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments/local.py">local</a>, or <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/environments/docker.py">docker</a>)</li>
 <li>How is the LM queried? Pick a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/models">model class</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/models/litellm_model.py">litellm</a>)</li>
-<li>How to invoke the agent? Bind them all together in a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run">run script</a>, possibly reading from a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/config">config</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/hello_world.py">hello world</a>, or <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/local.py"><code>micro</code> entry point</a>)</li>
+<li>How to invoke the agent? Bind them all together in a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run">run script</a>, possibly reading from a <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/config">config</a> (e.g., <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/hello_world.py">hello world</a>, or <a href="https://github.com/SWE-agent/micro-swe-agent/blob/main/src/microsweagent/run/micro.py"><code>micro</code> entry point</a>)</li>
 </ol>
 <p>We aim to keep all of these components very simple, but offer lots of choice between them -- enough to cover a broad range of
 things that you might want to do.</p>
