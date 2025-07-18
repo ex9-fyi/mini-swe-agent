@@ -1570,11 +1570,6 @@
 <p>Use pip to install <code>micro</code> in your current environment:</p>
 <div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>micro-swe-agent
 </code></pre></div>
-<p>Set your LM API key (<a href="#models">more</a>):</p>
-<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>set-key<span class="w"> </span>ANTHROPIC_API_KEY<span class="w"> </span>&lt;your-api-key&gt;
-<span class="c1"># or (not persistent)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>&lt;your-api-key&gt;
-</code></pre></div>
 <p>And try our command line interface</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
 micro
@@ -1584,12 +1579,7 @@ micro2
 </div>
 <div class="tabbed-block">
 <p>Use pipx to install &amp; run <code>micro</code> in an isolated environment.</p>
-<p>First <a href="https://pipx.pypa.io/stable/installation/">install pipx</a>, then set your LM API key (<a href="#models">more</a>):</p>
-<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>set-key<span class="w"> </span>ANTHROPIC_API_KEY<span class="w"> </span>&lt;your-api-key&gt;
-<span class="c1"># or (not persistent)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>&lt;your-api-key&gt;
-</code></pre></div>
-<p>and install + run:</p>
+<p>First <a href="https://pipx.pypa.io/stable/installation/">install pipx</a>, then run:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
 pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </span>git+ssh://git@github.com/SWE-agent/micro-swe-agent<span class="w"> </span>micro
 <span class="c1"># Textual UI</span>
@@ -1602,11 +1592,6 @@ pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </
 <div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/SWE-agent/micro-swe-agent.git
 <span class="nb">cd</span><span class="w"> </span>micro-swe-agent
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
-</code></pre></div>
-<p>Set your LM API key (<a href="#models">more</a>):</p>
-<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>set-key<span class="w"> </span>ANTHROPIC_API_KEY<span class="w"> </span>&lt;your-api-key&gt;
-<span class="c1"># or (not persistent)</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span>&lt;your-api-key&gt;
 </code></pre></div>
 <p>Then run:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
@@ -1635,14 +1620,14 @@ micro2
 <p>There are several ways to set your API kyes:</p>
 <ul>
 <li>Export your key as an environment variable: <code>export ANTHROPIC_API_KEY=&lt;your-api-key&gt;</code> (this is not persistent if you restart your shell, unless you add it to your shell config, like <code>~/.bashrc</code> or <code>~/.zshrc</code>).</li>
-<li>Use <code>micro-extra set-key ANTHROPIC_API_KEY &lt;your-api-key&gt;</code> to put the key in the micro config file. The location of the config file is printed when you run <code>micro --help</code>.</li>
+<li>Use <code>micro-extra config set ANTHROPIC_API_KEY &lt;your-api-key&gt;</code> to put the key in the micro config file. The location of the config file is printed when you run <code>micro --help</code>.</li>
 <li>If you only use a single model, you can also set <code>MSWEA_MODEL_API_KEY</code> (as environment variable or in the config file). This takes precedence over all other keys.</li>
 <li>If you run several agents in parallel, see our note about anthropic keys <a href="../advanced/configuration/">here</a>.</li>
 </ul>
 <h3 id="selecting-a-model">Selecting a model</h3>
 <ul>
 <li>All command line interfaces allow you to set the model name with <code>-m</code> or <code>--model</code>.</li>
-<li>In addition, you can set the default model with <code>micro-extra set-key MSWEA_MODEL_NAME &lt;model-name&gt;</code> or by editing the global config file.
+<li>In addition, you can set the default model with <code>micro-extra config set MSWEA_MODEL_NAME &lt;model-name&gt;</code> or by editing the global config file.
   If you run <code>micro</code> for the first time and do not use the <code>--model</code> flag, it will prompt you for the default model.</li>
 <li>You can also set your model in a config file (key <code>model_name</code> under <code>model</code>).</li>
 </ul>
