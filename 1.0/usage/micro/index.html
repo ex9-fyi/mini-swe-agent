@@ -1689,9 +1689,11 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">typer</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prompt_toolkit.history</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileHistory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prompt_toolkit.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptSession</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">Model</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">global_config_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive</span><span class="w"> </span><span class="kn">import</span> <span class="n">InteractiveAgent</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive_textual</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentApp</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">builtin_config_dir</span><span class="p">,</span> <span class="n">get_config_path</span>
@@ -1702,22 +1704,7 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 <span class="n">DEFAULT_CONFIG</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_LOCAL_CONFIG_PATH&quot;</span><span class="p">,</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;local.yaml&quot;</span><span class="p">))</span>
 <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">highlight</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">get_multiline_task</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a multiline task/problem statement from the user.&quot;&quot;&quot;</span>
-    <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
-        <span class="s2">&quot;[bold yellow]What do you want to do?[/bold yellow] (press [bold red]Ctrl+D[/bold red] in a [red]new line[/red] to finish)&quot;</span>
-    <span class="p">)</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">console</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="s2">&quot;[bold green]&gt;[/bold green] &quot;</span><span class="p">))</span>
-        <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
-            <span class="k">break</span>
-
-    <span class="nb">print</span><span class="p">()</span>
-    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+<span class="n">prompt_session</span> <span class="o">=</span> <span class="n">PromptSession</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">FileHistory</span><span class="p">(</span><span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;micro_task_history.txt&quot;</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">run_interactive</span><span class="p">(</span><span class="n">model</span><span class="p">:</span> <span class="n">Model</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="n">Environment</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
@@ -1771,7 +1758,15 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
     <span class="n">_config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">get_config_path</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">())</span>
 
     <span class="k">if</span> <span class="ow">not</span> <span class="n">task</span><span class="p">:</span>
-        <span class="n">task</span> <span class="o">=</span> <span class="n">get_multiline_task</span><span class="p">()</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
+            <span class="s2">&quot;[bold yellow]What do you want to do?</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;[bold green]Up[/bold green]/[bold green]Down[/bold green] to bring up previous tasks or [bold green]Ctrl+R[/bold green] to search</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;Confirm input with [bold green]Esc, Enter[/bold green]</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;&gt;[/bold yellow] &quot;</span><span class="p">,</span>
+            <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">task</span> <span class="o">=</span> <span class="n">prompt_session</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">multiline</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;[bold green]Got that, thanks![/bold green]&quot;</span><span class="p">)</span>
 
     <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;confirm&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">yolo</span> <span class="k">else</span> <span class="s2">&quot;yolo&quot;</span>
 
@@ -1780,9 +1775,9 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
     <span class="n">agent_config</span> <span class="o">=</span> <span class="n">_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;agent&quot;</span><span class="p">,</span> <span class="p">{})</span> <span class="o">|</span> <span class="p">{</span><span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="n">mode</span><span class="p">}</span>
 
     <span class="k">if</span> <span class="n">visual</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">run_textual</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">run_textual</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">run_interactive</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">run_interactive</span><span class="p">(</span><span class="n">_model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">agent_config</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
@@ -1807,12 +1802,16 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 <span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Literal</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">prompt_toolkit.history</span><span class="w"> </span><span class="kn">import</span> <span class="n">FileHistory</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">prompt_toolkit.shortcuts</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptSession</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">rich.rule</span><span class="w"> </span><span class="kn">import</span> <span class="n">Rule</span>
 
+<span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent</span><span class="w"> </span><span class="kn">import</span> <span class="n">global_config_dir</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.default</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgentConfig</span><span class="p">,</span> <span class="n">DefaultAgent</span><span class="p">,</span> <span class="n">NonTerminatingException</span>
 
 <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">highlight</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">prompt_session</span> <span class="o">=</span> <span class="n">PromptSession</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">FileHistory</span><span class="p">(</span><span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;interactive_history.txt&quot;</span><span class="p">))</span>
 
 
 <span class="nd">@dataclass</span>
@@ -1862,7 +1861,7 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
             <span class="c1"># We always add a message about the interrupt and then just proceed to the next step</span>
             <span class="n">interruption_message</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt_and_handle_special</span><span class="p">(</span>
                 <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[bold yellow]Interrupted.[/bold yellow] &quot;</span>
-                <span class="s2">&quot;[green]type a comment/command[/green] (/h for available commands)&quot;</span>
+                <span class="s2">&quot;[green]Type a comment/command[/green] (/h for available commands)&quot;</span>
                 <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">[bold yellow]&gt;[/bold yellow] &quot;</span>
             <span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">interruption_message</span> <span class="ow">or</span> <span class="n">interruption_message</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_MODE_COMMANDS_MAPPING</span><span class="p">:</span>
@@ -1881,7 +1880,7 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
     <span class="k">def</span><span class="w"> </span><span class="nf">ask_confirmation</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">prompt</span> <span class="o">=</span> <span class="p">(</span>
             <span class="s2">&quot;[bold yellow]Execute?[/bold yellow] [green][bold]Enter[/bold] to confirm[/green], &quot;</span>
-            <span class="s2">&quot;or [green]type a comment/command[/green] (/h for available commands)</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;or [green]Type a comment/command[/green] (/h for available commands)</span><span class="se">\n</span><span class="s2">&quot;</span>
             <span class="s2">&quot;[bold yellow]&gt;[/bold yellow] &quot;</span>
         <span class="p">)</span>
         <span class="k">match</span> <span class="n">user_input</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prompt_and_handle_special</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
@@ -1896,7 +1895,8 @@ You can also press <code>Ctrl+C</code> to interrupt the agent at any time, allow
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_prompt_and_handle_special</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Prompts the user, takes care of /h (followed by requery) and sets the mode. Returns the user input.&quot;&quot;&quot;</span>
-        <span class="n">user_input</span> <span class="o">=</span> <span class="n">console</span><span class="o">.</span><span class="n">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">prompt</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">user_input</span> <span class="o">=</span> <span class="n">prompt_session</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">user_input</span> <span class="o">==</span> <span class="s2">&quot;/h&quot;</span><span class="p">:</span>
             <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;Current mode: [bold green]</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">[/bold green]</span><span class="se">\n</span><span class="s2">&quot;</span>
