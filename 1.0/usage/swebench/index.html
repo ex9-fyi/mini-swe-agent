@@ -1798,6 +1798,14 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <li><a href="../../reference/run/swebench/">API reference</a></li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+
+<span class="sd">&quot;&quot;&quot;Run micro-SWE-agent on SWEBench instances.</span>
+
+<span class="sd">[not dim]</span>
+<span class="sd">More information about the usage: [bold green]https://mellow-pegasus-562d44.netlify.app/usage/swebench/[/bold green]</span>
+<span class="sd">[/not dim]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span><span class="w"> </span><span class="nn">concurrent.futures</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
@@ -1819,7 +1827,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.run.extra.utils.batch_progress</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunBatchProgressManager</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">rich_markup_mode</span><span class="o">=</span><span class="s2">&quot;rich&quot;</span><span class="p">,</span> <span class="n">add_completion</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="n">DATASET_MAPPING</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;full&quot;</span><span class="p">:</span> <span class="s2">&quot;princeton-nlp/SWE-Bench&quot;</span><span class="p">,</span>
@@ -2046,7 +2054,7 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.run.extra.swebench</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATASET_MAPPING</span><span class="p">,</span> <span class="n">get_swebench_docker_image_name</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">add_completion</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>

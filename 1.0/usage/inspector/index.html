@@ -1786,9 +1786,15 @@ micro<span class="w"> </span>i<span class="w"> </span>&lt;path_to_directory&gt;
 <span class="normal">207</span>
 <span class="normal">208</span>
 <span class="normal">209</span>
-<span class="normal">210</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Simple trajectory inspector for browsing agent conversation trajectories.</span>
+
+<span class="sd">[not dim]</span>
+<span class="sd">More information about the usage: [bold green]https://mellow-pegasus-562d44.netlify.app/usage/inspector/[/bold green]</span>
+<span class="sd">[/not dim]</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
@@ -1804,7 +1810,7 @@ micro<span class="w"> </span>i<span class="w"> </span>&lt;path_to_directory&gt;
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">microsweagent.agents.interactive_textual</span><span class="w"> </span><span class="kn">import</span> <span class="n">_messages_to_steps</span>
 
-<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">()</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">rich_markup_mode</span><span class="o">=</span><span class="s2">&quot;rich&quot;</span><span class="p">,</span> <span class="n">add_completion</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 
 <span class="k">class</span><span class="w"> </span><span class="nc">TrajectoryInspector</span><span class="p">(</span><span class="n">App</span><span class="p">):</span>
@@ -1973,12 +1979,10 @@ micro<span class="w"> </span>i<span class="w"> </span>&lt;path_to_directory&gt;
         <span class="n">vs</span><span class="o">.</span><span class="n">scroll_to</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">vs</span><span class="o">.</span><span class="n">scroll_target_y</span> <span class="o">-</span> <span class="mi">15</span><span class="p">)</span>
 
 
-<span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+<span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="vm">__doc__</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
     <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Directory to search for trajectory files or specific trajectory file&quot;</span><span class="p">),</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Inspect trajectory files interactively.&quot;&quot;&quot;</span>
-
     <span class="n">path_obj</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">path_obj</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
