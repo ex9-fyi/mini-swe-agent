@@ -32,6 +32,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
@@ -71,9 +72,27 @@ jobs:
             podman machine start
       - name: Install podman (Windows)
         if: runner.os == 'Windows'
+        shell: powershell
         run: |
-            choco install podman-desktop
-            # Initialize podman machine
+            # Try winget first, fallback to direct download
+            try {
+                winget install RedHat.Podman
+            } catch {
+                Write-Host "Winget failed, trying direct download..."
+                # Download and install podman directly
+                $url = "https://github.com/containers/podman/releases/latest/download/podman-remote-release-windows_amd64.zip"
+                $output = "$env:TEMP\podman.zip"
+                Invoke-WebRequest -Uri $url -OutFile $output
+                Expand-Archive -Path $output -DestinationPath "$env:TEMP\podman"
+                $podmanPath = "$env:TEMP\podman\podman-*\podman.exe"
+                $podmanDir = Split-Path (Get-ChildItem $podmanPath).FullName
+                echo "$podmanDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+                         }
+             # Verify installation in next step
+      - name: Initialize podman machine (Windows)
+        if: runner.os == 'Windows'
+        run: |
+            podman --version
             podman machine init
             podman machine start
       - name: Install dependencies
