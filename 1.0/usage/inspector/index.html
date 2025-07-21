@@ -107,7 +107,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#inspector" class="md-skip">
+        <a href="#inspector-browse-agent-trajectories" class="md-skip">
           Skip to content
         </a>
       
@@ -640,6 +640,21 @@
       Key bindings
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Key bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      FAQ
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1515,6 +1530,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Key bindings">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      FAQ
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1551,8 +1581,14 @@
   
 
 
-<h1 id="inspector">Inspector</h1>
-<p>The inspector is a tool that allows you to browse <code>.traj.json</code> files that show the history of a micro-SWE-agent run.</p>
+<h1 id="inspector-browse-agent-trajectories">Inspector: Browse agent trajectories</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Overview</p>
+<ul>
+<li>The <code>inspector</code> is a tool that allows you to browse <code>.traj.json</code> files that show the history of a micro-SWE-agent run.</li>
+<li>Quickly start it with <code>micro-e i</code> or <code>micro-extra inspector</code>.</li>
+</ul>
+</div>
 <h2 id="usage">Usage</h2>
 <div class="highlight"><pre><span></span><code><span class="c1"># Find all .traj.json files recursively from current directory</span>
 micro-extra<span class="w"> </span>inspector
@@ -1573,7 +1609,13 @@ micro-e<span class="w"> </span>i<span class="w"> </span>&lt;path_to_directory&gt
 <li><code>H</code>: Previous trajectory</li>
 <li><code>L</code>: Next trajectory</li>
 </ul>
+<h3 id="faq">FAQ</h3>
+<blockquote>
+<p>How can I select/copy text on the screen?</p>
+</blockquote>
+<p>Hold down the <code>Alt</code>/<code>Option</code> key and use the mouse to select the text.</p>
 <h2 id="implementation">Implementation</h2>
+<p>The inspector is implemented with <a href="https://textual.textualize.io/">textual</a>.</p>
 <details class="note">
 <summary>Implementation</summary>
 <ul>

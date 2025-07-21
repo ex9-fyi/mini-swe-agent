@@ -603,6 +603,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#faq" class="md-nav__link">
     <span class="md-ellipsis">
       FAQ
@@ -1491,6 +1500,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#faq" class="md-nav__link">
     <span class="md-ellipsis">
       FAQ
@@ -1534,12 +1552,47 @@
 
 
 <h1 id="swe-bench">SWE-bench</h1>
-<p>We provide two scripts to run on <a href="https://www.swebench.com/">SWE-bench</a>:</p>
+<div class="admonition abstract">
+<p class="admonition-title">Overview</p>
 <ul>
-<li><code>src/microsweagent/run/extra/swebench.py</code>: Evaluate on SWE-bench in batch mode</li>
-<li><code>src/microsweagent/run/extra/swebench_single.py</code>: Evaluate on a single SWE-bench task
-   (used for development &amp; debugging).</li>
+<li>We provide two scripts to run on the <a href="https://www.swebench.com/">SWE-bench</a> benchmark.</li>
+<li><code>micro-extra swebench</code> runs on all task instances in batch mode.</li>
+<li><code>micro-extra swebench-single</code> runs on a single task instance with interactivity (useful for debugging).</li>
 </ul>
+</div>
+<h2 id="usage">Usage</h2>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Batch mode</label><label for="__tabbed_1_2">Single instance (for debugging)</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>swebench
+<span class="c1"># or</span>
+python<span class="w"> </span>src/microsweagent/run/extra/swebench.py
+<span class="c1"># show help</span>
+micro-extra<span class="w"> </span>swebench<span class="w"> </span>--help
+<span class="c1"># for example</span>
+micro-extra<span class="w"> </span>swebench<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span>claude-sonnet-4-20250514<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--subset<span class="w"> </span>verified<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--split<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--workers<span class="w"> </span><span class="m">4</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>swebench-single
+<span class="c1"># or</span>
+python<span class="w"> </span>src/microsweagent/run/extra/swebench_single.py
+<span class="c1"># show help</span>
+micro-extra<span class="w"> </span>swebench-single<span class="w"> </span>--help
+<span class="c1"># for example</span>
+micro-extra<span class="w"> </span>swebench-single<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--model<span class="w"> </span>claude-sonnet-4-20250514<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--subset<span class="w"> </span>verified<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--split<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-i<span class="w"> </span><span class="m">0</span><span class="w">  </span><span class="c1"># instance index (alternatively, specify instance name)</span>
+</code></pre></div>
+</div>
+</div>
+</div>
 <h2 id="faq">FAQ</h2>
 <blockquote>
 <p>What happens to uncompleted tasks when I abort with KeyboardInterrupt?</p>
