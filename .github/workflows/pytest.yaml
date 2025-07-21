@@ -69,7 +69,7 @@ jobs:
         run: |
             # Docker Desktop is pre-installed on GitHub Actions macOS runners
             # Just start Docker service
-            # # sudo /Applications/Docker.app/Contents/MacOS/Docker --unattended &
+            sudo /Applications/Docker.app/Contents/MacOS/Docker --unattended &
             # sleep 30
             docker --version
       - name: Install Docker (Windows)
