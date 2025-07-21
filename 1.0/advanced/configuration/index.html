@@ -528,12 +528,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../../usage/micro2/" class="md-nav__link">
+      <a href="../../usage/micro_v/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    <code>micro2</code>
+    <code>micro -v</code>
     
   </span>
   
@@ -704,13 +704,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
+  <a href="#environment-variables-and-global-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Environment variables
+      Environment variables and global configuration
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Environment variables">
+    <nav class="md-nav" aria-label="Environment variables and global configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1524,13 +1524,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#environment-variables" class="md-nav__link">
+  <a href="#environment-variables-and-global-configuration" class="md-nav__link">
     <span class="md-ellipsis">
-      Environment variables
+      Environment variables and global configuration
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Environment variables">
+    <nav class="md-nav" aria-label="Environment variables and global configuration">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1600,12 +1600,30 @@
 
 
 <h1 id="configuration">Configuration</h1>
-<h2 id="environment-variables">Environment variables</h2>
+<h2 id="environment-variables-and-global-configuration">Environment variables and global configuration</h2>
 <p>All global configuration can be either set as environment variables, or in the <code>.env</code> file (the exact location is printed when you run <code>micro</code>).</p>
 <div class="admonition note">
 <p class="admonition-title">Precedence</p>
 <p>Environment variables take precedence over variables set in the <code>.env</code> file.</p>
 </div>
+<p>We provide several helper functions to update the global configuration.</p>
+<p>For example, to set the default model and API keys, you can run:</p>
+<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>config<span class="w"> </span>setup
+</code></pre></div>
+<p>or to update specific settings:</p>
+<div class="highlight"><pre><span></span><code>micro-extra config set KEY VALUE
+# e.g.,
+micro-extra config set MSWEA_MODEL_NAME &quot;claude-sonnet-4-20250514&quot;
+micro-extra config set MSWEA_MODEL_API_KEY &quot;sk-...&quot;
+</code></pre></div>
+<p>or to unset a key:</p>
+<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>config<span class="w"> </span><span class="nb">unset</span><span class="w"> </span>KEY
+<span class="c1"># e.g.,</span>
+micro-extra<span class="w"> </span>config<span class="w"> </span><span class="nb">unset</span><span class="w"> </span>MSWEA_MODEL_API_KEY
+</code></pre></div>
+<p>You can also edit the <code>.env</code> file directly and we provide a helper function for that:</p>
+<div class="highlight"><pre><span></span><code>micro-extra<span class="w"> </span>config<span class="w"> </span>edit
+</code></pre></div>
 <h3 id="models-and-keys">Models and keys</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Default model name</span>
 <span class="c1"># (default: not set)</span>

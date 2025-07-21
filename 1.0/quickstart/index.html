@@ -603,12 +603,12 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/micro2/" class="md-nav__link">
+      <a href="../usage/micro_v/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
-    <code>micro2</code>
+    <code>micro -v</code>
     
   </span>
   
@@ -1574,7 +1574,7 @@
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
 micro
 <span class="c1"># Textual UI</span>
-micro2
+micro<span class="w"> </span>-v
 </code></pre></div>
 </div>
 <div class="tabbed-block">
@@ -1583,7 +1583,7 @@ micro2
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
 pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </span>git+ssh://git@github.com/SWE-agent/micro-swe-agent<span class="w"> </span>micro
 <span class="c1"># Textual UI</span>
-pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </span>git+ssh://git@github.com/SWE-agent/micro-swe-agent<span class="w"> </span>micro2
+pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </span>git+ssh://git@github.com/SWE-agent/micro-swe-agent<span class="w"> </span>micro<span class="w"> </span>-v
 </code></pre></div>
 <p>If the invocation doesn't immediately work, you might need to run <code>pipx ensurepath</code>.</p>
 </div>
@@ -1597,7 +1597,7 @@ pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </s
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
 micro
 <span class="c1"># Textual UI</span>
-micro2
+micro<span class="w"> </span>-v
 </code></pre></div>
 <p>Or pick a <a href="reference/run/">run script</a>:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>microsweagent/run/hello_world.py
