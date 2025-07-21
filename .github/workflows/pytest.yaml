@@ -64,37 +64,20 @@ jobs:
             sudo dpkg -i apptainer_1.3.4_amd64.deb || sudo apt-get install -f -y
             # Create singularity symlink for compatibility
             sudo ln -sf /usr/bin/apptainer /usr/bin/singularity
-      - name: Install podman (macOS)
+      - name: Install Docker (macOS)
         if: runner.os == 'macOS'
         run: |
-            brew install podman
-            podman machine init
-            podman machine start
-      - name: Install podman (Windows)
-        if: runner.os == 'Windows'
-        shell: powershell
-        run: |
-            # Try winget first, fallback to direct download
-            try {
-                winget install RedHat.Podman
-            } catch {
-                Write-Host "Winget failed, trying direct download..."
-                # Download and install podman directly
-                $url = "https://github.com/containers/podman/releases/latest/download/podman-remote-release-windows_amd64.zip"
-                $output = "$env:TEMP\podman.zip"
-                Invoke-WebRequest -Uri $url -OutFile $output
-                Expand-Archive -Path $output -DestinationPath "$env:TEMP\podman"
-                $podmanPath = "$env:TEMP\podman\podman-*\podman.exe"
-                $podmanDir = Split-Path (Get-ChildItem $podmanPath).FullName
-                echo "$podmanDir" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-                         }
-             # Verify installation in next step
-      - name: Initialize podman machine (Windows)
+            # Docker Desktop is pre-installed on GitHub Actions macOS runners
+            # Just start Docker service
+            # # sudo /Applications/Docker.app/Contents/MacOS/Docker --unattended &
+            # sleep 30
+            docker --version
+      - name: Install Docker (Windows)
         if: runner.os == 'Windows'
         run: |
-            podman --version
-            podman machine init
-            podman machine start
+            # Docker Desktop is pre-installed on GitHub Actions Windows runners
+            # Just verify it's working
+            docker --version
       - name: Install dependencies
         run: |
             pip install -e '.[full]'
