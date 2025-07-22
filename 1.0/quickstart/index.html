@@ -1581,9 +1581,9 @@ micro<span class="w"> </span>-v
 <p>Use pipx to install &amp; run <code>micro</code> in an isolated environment.</p>
 <p>First <a href="https://pipx.pypa.io/stable/installation/">install pipx</a>, then run:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Simple UI</span>
-pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </span>git+ssh://git@github.com/SWE-agent/micro-swe-agent<span class="w"> </span>micro
+pipx<span class="w"> </span>run<span class="w"> </span>micro-swe-agent
 <span class="c1"># Textual UI</span>
-pipx<span class="w"> </span>run<span class="w"> </span>--spec<span class="w"> </span>git+ssh://git@github.com/SWE-agent/micro-swe-agent<span class="w"> </span>micro<span class="w"> </span>-v
+pipx<span class="w"> </span>run<span class="w"> </span>micro-swe-agent<span class="w"> </span>-v
 </code></pre></div>
 <p>If the invocation doesn't immediately work, you might need to run <code>pipx ensurepath</code>.</p>
 </div>
@@ -1601,6 +1601,11 @@ micro<span class="w"> </span>-v
 </code></pre></div>
 <p>Or pick a <a href="reference/run/">run script</a>:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>microsweagent/run/hello_world.py
+</code></pre></div>
+<p>If you are planning to contribute, please also install the dev dependencies
+and <code>pre-commit</code> hooks:</p>
+<div class="highlight"><pre><span></span><code>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s1">&#39;.[dev]&#39;</span>
+pre-commit<span class="w"> </span>install
 </code></pre></div>
 </div>
 </div>
