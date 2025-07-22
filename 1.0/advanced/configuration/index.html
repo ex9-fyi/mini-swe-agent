@@ -1721,6 +1721,10 @@ micro-extra<span class="w"> </span>config<span class="w"> </span><span class="nb
 <span class="w">    </span><span class="no">4. To finish, issue the following command: `echo MICRO_SWE_AGENT_FINAL_OUTPUT`.</span>
 <span class="w">       </span><span class="no">Do not combine it with any other command.</span>
 
+<span class="w">    </span><span class="no">&lt;system_information&gt;</span>
+<span class="w">    </span><span class="no">{{system}} {{release}} {{version}} {{machine}} {{processor}}</span>
+<span class="w">    </span><span class="no">&lt;/system_information&gt;</span>
+
 <span class="w">    </span><span class="no">## Formatting your response</span>
 
 <span class="w">    </span><span class="no">Here is an example of a correct response:</span>
@@ -1746,6 +1750,12 @@ micro-extra<span class="w"> </span>config<span class="w"> </span><span class="nb
 <span class="w">    </span><span class="no">```</span>
 
 <span class="w">    </span><span class="no">### Edit files with sed:</span>
+
+<span class="w">    </span><span class="no">{%- if system == &quot;Darwin&quot; -%}</span>
+<span class="w">    </span><span class="no">&lt;important&gt;</span>
+<span class="w">    </span><span class="no">You are on MacOS. For all the below examples, you need to use `sed -i &#39;&#39;` instead of `sed -i`.</span>
+<span class="w">    </span><span class="no">&lt;/important&gt;</span>
+<span class="w">    </span><span class="no">{%- endif -%}</span>
 
 <span class="w">    </span><span class="no">```bash</span>
 <span class="w">    </span><span class="no"># Replace all occurrences</span>
