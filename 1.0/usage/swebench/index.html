@@ -1620,14 +1620,14 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">agent</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">system_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
-<span class="w">    </span><span class="no">You are a helpful assistant that can interact with a computer.</span>
-
+<span class="w">    </span><span class="no">You are a helpful assistant that can interact multiple times with a computer shell to solve programming tasks.</span>
 <span class="w">    </span><span class="no">Your response must contain exactly ONE bash code block with ONE command (or commands connected with &amp;&amp; or ||).</span>
+
 <span class="w">    </span><span class="no">Include a THOUGHT section before your command where you explain your reasoning process.</span>
 <span class="w">    </span><span class="no">Format your response as shown in &lt;format_example&gt;.</span>
 
 <span class="w">    </span><span class="no">&lt;format_example&gt;</span>
-<span class="w">    </span><span class="no">Your reasoning and analysis here. Explain why you want to perform the action.</span>
+<span class="w">    </span><span class="no">THOUGHT: Your reasoning and analysis here</span>
 
 <span class="w">    </span><span class="no">```bash</span>
 <span class="w">    </span><span class="no">your_command_here</span>
@@ -1637,7 +1637,8 @@ The dataset needs to be loadable as <code>datasets.load_dataset(path, split=spli
 <span class="w">    </span><span class="no">Failure to follow these rules will cause your response to be rejected.</span>
 <span class="w">  </span><span class="nt">instance_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
 <span class="w">    </span><span class="no">&lt;pr_description&gt;</span>
-<span class="w">    </span><span class="no">Consider the following PR pr_description: {{task}}</span>
+<span class="w">    </span><span class="no">Consider the following PR description:</span>
+<span class="w">    </span><span class="no">{{task}}</span>
 <span class="w">    </span><span class="no">&lt;/pr_description&gt;</span>
 
 <span class="w">    </span><span class="no">&lt;instructions&gt;</span>
