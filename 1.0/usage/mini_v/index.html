@@ -1633,8 +1633,8 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <ul>
 <li><code>-h</code>/<code>--help</code>: Show help</li>
 <li><code>-t</code>/<code>--task</code>: Specify a task to run (else you will be prompted)</li>
-<li><code>-c</code>/<code>--config</code>: Specify a config file to use, else we will use <a href="https://github.com/swe-agent/mini-swe-agent/blob/main/src/minisweagent/config/local2.yaml"><code>local2.yaml</code></a> or the config <code>MSWEA_LOCAL2_CONFIG_PATH</code> environment variable (see <a href="../../advanced/configuration/">configuration</a>)
-  It's enough to specify the name of the config file, e.g., <code>-c local.yaml</code> (see <a href="../../advanced/configuration/">configuration</a> for how it is resolved).</li>
+<li><code>-c</code>/<code>--config</code>: Specify a config file to use, else we will use <a href="https://github.com/swe-agent/mini-swe-agent/blob/main/src/minisweagent/config/mini.yaml"><code>mini.yaml</code></a> or the config <code>MSWEA_MINI_CONFIG_PATH</code> environment variable (see <a href="../../advanced/configuration/">configuration</a>)
+  It's enough to specify the name of the config file, e.g., <code>-c mini.yaml</code> (see <a href="../../advanced/configuration/">configuration</a> for how it is resolved).</li>
 <li><code>-m</code>/<code>--model</code>: Specify a model to use, else we will use the model <code>MSWEA_MODEL_NAME</code> environment variable (see <a href="../../advanced/configuration/">configuration</a>)</li>
 <li><code>-y</code>/<code>--yolo</code>: Start in <code>yolo</code> mode (see below)</li>
 </ul>
@@ -1664,7 +1664,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <details class="note">
 <summary>Default config</summary>
 <ul>
-<li><a href="https://github.com/swe-agent/mini-swe-agent/blob/main/src/minisweagent/config/local.yaml">Read on GitHub</a></li>
+<li><a href="https://github.com/swe-agent/mini-swe-agent/blob/main/src/minisweagent/config/mini.yaml">Read on GitHub</a></li>
 </ul>
 <div class="highlight"><pre><span></span><code><span class="nt">agent</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">system_template</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
@@ -1862,7 +1862,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.extra.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure_if_first_time</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
 
-<span class="n">DEFAULT_CONFIG</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_LOCAL_CONFIG_PATH&quot;</span><span class="p">,</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;local.yaml&quot;</span><span class="p">))</span>
+<span class="n">DEFAULT_CONFIG</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_MINI_CONFIG_PATH&quot;</span><span class="p">,</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;mini.yaml&quot;</span><span class="p">))</span>
 <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">highlight</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">rich_markup_mode</span><span class="o">=</span><span class="s2">&quot;rich&quot;</span><span class="p">)</span>
 <span class="n">prompt_session</span> <span class="o">=</span> <span class="n">PromptSession</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">FileHistory</span><span class="p">(</span><span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;mini_task_history.txt&quot;</span><span class="p">))</span>
