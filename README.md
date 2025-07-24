@@ -1,5 +1,7 @@
-<div align="center">
-<h1>The 100 line AI agent that solves GitHub issues & more</h1>
+<div align="left">
+
+# mini-SWE-agent  
+### The 100 line AI agent that solves GitHub issues & more
 
 [![Docs](https://img.shields.io/badge/Docs-green?style=for-the-badge&logo=materialformkdocs&logoColor=white)](https://mini-swe-agent.com/latest/)
 [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s-o3_yXPZbaH2wVnxnss1EkQ)
