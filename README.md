@@ -1,7 +1,4 @@
 <div align="center">
-
-<a href="https://mini-swe-agent.com/latest/"><img src="https://github.com/SWE-agent/mini-swe-agent/raw/main/docs/assets/mini-swe-agent-banner.svg" alt="mini-swe-agent banner" style="height: 7em"/></a>
-
 <h1>The 100 line AI agent that solves GitHub issues & more</h1>
 
 [![Docs](https://img.shields.io/badge/Docs-green?style=for-the-badge&logo=materialformkdocs&logoColor=white)](https://mini-swe-agent.com/latest/)
@@ -16,19 +13,19 @@ We now ask: **What if SWE-agent was 100x smaller, and still worked nearly as wel
 
 `mini` is for
 
-- 🧪 **Researchers** who want to **benchmark, fine-tune or RL** without assumptions, bloat, or surprises
-- 🧑‍💻 **Hackers & power users** who like their tools like their scripts: **short, sharp, and readable**
-- 🐳 **Engineers** who want something **trivial to sandbox & to deploy anywhere**
+- **Researchers** who want to **benchmark, fine-tune or RL** without assumptions, bloat, or surprises
+- **Hackers & power users** who like their tools like their scripts: **short, sharp, and readable**
+- **Engineers** who want something **trivial to sandbox & to deploy anywhere**
 
 Here's some details:
 
-- **🐜 Minimal**: Just [100 lines of python](https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/agents/default.py) (+100 total for [env](https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/environments/local.py),
+- **Minimal**: Just [100 lines of python](https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/agents/default.py) (+100 total for [env](https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/environments/local.py),
 [model](https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/models/litellm_model.py), [script](https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/run/hello_world.py)) — no fancy dependencies!
-- **💪 Powerful:** Resolves 65% of GitHub issues in the [SWE-bench verified benchmark](https://www.swebench.com/).
-- **🤗 Friendly:** Comes with **two convenient UIs** that will turn this into your daily dev swiss army knife!
-- **🍀 Environments:** In addition to local envs, you can use **docker**, **podman**, **singularity**, **apptainer**, and more
-- **🧪 Tested:** [![Codecov](https://img.shields.io/codecov/c/github/swe-agent/mini-swe-agent?style=flat-square)](https://codecov.io/gh/SWE-agent/mini-swe-agent)
-- **🎓 Cutting edge:** Built by the Princeton & Stanford team behind [SWE-bench](https://swebench.com) and [SWE-agent](https://swe-agent.com).
+- **Powerful:** Resolves 65% of GitHub issues in the [SWE-bench verified benchmark](https://www.swebench.com/).
+- **Friendly:** Comes with **two convenient UIs** that will turn this into your daily dev swiss army knife!
+- **Environments:** In addition to local envs, you can use **docker**, **podman**, **singularity**, **apptainer**, and more
+- **Tested:** [![Codecov](https://img.shields.io/codecov/c/github/swe-agent/mini-swe-agent?style=flat-square)](https://codecov.io/gh/SWE-agent/mini-swe-agent)
+- **Cutting edge:** Built by the Princeton & Stanford team behind [SWE-bench](https://swebench.com) and [SWE-agent](https://swe-agent.com).
 
 <details>
 
