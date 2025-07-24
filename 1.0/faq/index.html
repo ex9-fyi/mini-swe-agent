@@ -800,6 +800,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#minutia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minutia
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1533,6 +1542,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#minutia" class="md-nav__link">
+    <span class="md-ellipsis">
+      Minutia
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1585,15 +1603,26 @@
 </ul>
 </details>
 <details class="question">
+<summary>How is <code>mini</code> simpler than <code>swe-agent</code>?</summary>
+<p><code>mini</code> is simpler than <code>swe-agent</code> because it:</p>
+<ul>
+<li>Does not have any tools other than bash — it doesn't even use the tool-calling interface of the LMs.
+  This means you don't have to install anything in any environment you're running in. <code>bash</code> is all you need.</li>
+<li>Has a completely linear history — every step of the agent just appends to the messages and that's it.</li>
+<li>Executes actions with <code>subprocess.run</code> — every action is completely independent (as opposed to keeping a stateful shell session running).
+  This is <a href="#why-no-shell-session">avoids so many issues</a>, trust me.</li>
+</ul>
+</details>
+<details class="question">
 <summary>What are the limitations of mini-SWE-agent?</summary>
 <p>mini-SWE-agent can be extended trivially in various ways, the following assumes the default setup.
 As reflected in the high SWE-bench scores, none of the following limitations are a problem in practice.</p>
 <ul>
 <li>No tools other than bash</li>
 <li>Actions are parsed from triple-backtick blocks (rather than assuming a function calling/tool calling format)</li>
-<li>By default, actions are executed as <code>subprocess.run</code>, i.e., every action is independent of the previous ones
+<li>By default, actions are executed as <code>subprocess.run</code>, i.e., every action is independent of the previous ones.
   (meaning that the agent cannot change directories or export environment variables; however environment variables
-  can be set per-action)</li>
+  can be set per-action). This is <a href="#why-no-shell-session">avoids so many issues</a>, trust me.</li>
 </ul>
 <p>If you want more flexibility with these items, you can use <a href="https://swe-agent.com/">SWE-agent</a> instead.</p>
 </details>
@@ -1631,6 +1660,20 @@ To permanently change it:</p>
 <p>Alternatively, you can directly edit the <code>.env</code> file in the config directory
 (the location is printed when you run <code>mini --help</code>).</p>
 </div>
+<h2 id="minutia">Minutia</h2>
+<details class="question">
+<summary>Why is not needed a running shell session such a big deal?</summary>
+<p><a name="why-no-shell-session"></a></p>
+<p>Most agents so far kept a running shell session. Every action from the agent was executed in this session.
+However, this is far from trivial:</p>
+<ol>
+<li>It's not obvious when a command has terminated. Essentially you're just pasting input into the shell session, and press enter—but when do you stop reading output?
+   We've experimented with various heuristics (watching PIDs, watching for the shell to go back to the prompt, etc.) but all of them were flaky.
+   The <code>mini</code> agent doesn't need any of this!</li>
+<li>Particularly bad commands from the LM can kill the shell session. Then what?</li>
+<li>Interrupting a command running in a shell session can also mess up the shell itself and can in particular interfere with all the following outputs you want to extract.</li>
+</ol>
+</details>
 <div class="grid cards">
   <a href="https://github.com/SWE-agent/SWE-agent/issues/new" class="nav-card-link">
     <div class="nav-card">
