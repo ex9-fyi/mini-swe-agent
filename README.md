@@ -26,6 +26,7 @@ Here's some details:
 - **Environments:** In addition to local envs, you can use **docker**, **podman**, **singularity**, **apptainer**, and more
 - **Tested:** [![Codecov](https://img.shields.io/codecov/c/github/swe-agent/mini-swe-agent?style=flat-square)](https://codecov.io/gh/SWE-agent/mini-swe-agent)
 - **Cutting edge:** Built by the Princeton & Stanford team behind [SWE-bench](https://swebench.com) and [SWE-agent](https://swe-agent.com).
+&nbsp;
 
 <details>
 
@@ -94,6 +95,7 @@ What you get with both
 - A trajectory browser
 
 </details>
+&nbsp;
 
 <table>
 <tr>
