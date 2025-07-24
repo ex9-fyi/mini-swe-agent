@@ -171,7 +171,7 @@ agent.run("Write a sudoku game")
 </tr>
 </table>
 
-## 🔥 Let's get started!
+## Let's get started!
 
 Install + run in virtual environment
 
@@ -203,7 +203,7 @@ Read more in our [documentation](https://mini-swe-agent.com/latest/):
 * [FAQ](https://mini-swe-agent.com/latest/faq/)
 * [Contribute!](https://mini-swe-agent.com/latest/contributing/)
 
-## 👀 More agentic AI
+## More agentic AI
 
 <div align="center">
   <a href="https://github.com/SWE-agent/SWE-agent"><img src="https://github.com/SWE-agent/mini-swe-agent/raw/main/docs/assets/sweagent_logo_text_below.svg" alt="SWE-agent" height="120px"></a>
