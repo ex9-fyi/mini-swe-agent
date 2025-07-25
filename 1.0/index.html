@@ -1524,8 +1524,12 @@
 <p><a href="https://swe-agent.com/latest/">SWE-agent</a> jump-started the development of AI agents in 2024. Back then, we placed a lot of emphasis on tools and special interfaces for the agent. However, one year later, a lot of this is not needed at all to build a useful agent!</p>
 <p>In fact, mini-SWE-agent:</p>
 <ul>
-<li><strong>Does not have any tools other than bash</strong> — it doesn't even use the tool-calling interface of the LMs. This means that you can run it with literally any model. When running in sandboxed environments you also don't need to take care of installing a single package — all it needs is bash.</li>
-<li><strong>Has a completely linear history</strong> — every step of the agent just appends to the messages and that's it. So there's no difference between the trajectory and the messages that you pass on to the LM.</li>
+<li><strong>Does not have any tools other than bash</strong> — it doesn't even use the tool-calling interface of the LMs.
+  This means that you can run it with literally any model.
+  When running in sandboxed environments you also don't need to take care of installing a single package — all it needs is bash.</li>
+<li><strong>Has a completely linear history</strong> — every step of the agent just appends to the messages and that's it.
+  So there's no difference between the trajectory and the messages that you pass on to the LM.
+  Great for debugging &amp; fine-tuning.</li>
 <li><strong>Executes actions with <code>subprocess.run</code></strong> — every action is completely independent (as opposed to keeping a stateful shell session running). This makes it trivial to execute the actions in sandboxes (literally just switch out <code>subprocess.run</code> with <code>docker exec</code>) and to scale up effortlessly.
   Seriously, this is <a href="faq/#why-no-shell-session">a big deal</a>, trust me.</li>
 </ul>
@@ -1542,9 +1546,14 @@
 </ul>
 <p>Unlike other agents (including our own <a href="https://swe-agent.com/latest/">swe-agent</a>), it is radically simpler, because it:</p>
 <ul>
-<li>Does not have any tools other than bash — it doesn't even use the tool-calling interface of the LMs.</li>
-<li>Has a completely linear history — every step of the agent just appends to the messages and that's it.</li>
-<li>Executes actions with <code>subprocess.run</code> — every action is completely independent (as opposed to keeping a stateful shell session running). This is <a href="faq/#why-no-shell-session">a big deal</a>, trust me.</li>
+<li><strong>Does not have any tools other than bash</strong> — it doesn't even use the tool-calling interface of the LMs.
+  Instead of implementing custom tools for every specific thing the agent might want to do, the focus is fully on the LM utilizing the shell to its full potential.
+  Want it to do something specific like opening a PR?
+  Just tell the LM to figure it out rather than spending time to implement it in the agent.</li>
+<li><strong>Executes actions with <code>subprocess.run</code></strong> — every action is completely independent (as opposed to keeping a stateful shell session running).
+  This is <a href="https://mini-swe-agent.com/latest/faq/#why-no-shell-session">a big deal</a> for the stability of the agent, trust me.</li>
+<li><strong>Has a completely linear history</strong> — every step of the agent just appends to the messages that are passed to the LM in the next step and that's it.
+  This is great for debugging and understanding what the LM is prompted with.</li>
 </ul>
 </details>
 <details class="note">
