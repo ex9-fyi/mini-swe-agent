@@ -1487,25 +1487,37 @@
 
 <div align="center">
 <a class="glightbox" href="assets/mini-swe-agent-banner.svg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="assets/mini-swe-agent-banner.svg" alt="mini-swe-agent banner" style="height: 7em"/></a>
-<h1>The 100 line AI agent that's actually useful</h1>
+
+<h1 style="margin-bottom: 1ex;">The 100 line AI agent that's actually useful</h1>
+
+<a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s-o3_yXPZbaH2wVnxnss1EkQ">
+    <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white" alt="Slack">
+</a>
+<a href="https://github.com/SWE-agent/mini-swe-agent">
+    <img alt="GitHub Release" src="https://img.shields.io/github/v/release/swe-agent/mini-swe-agent?style=for-the-badge&logo=github&label=GitHub&labelColor=black&color=green" alt="GitHub Release">
+</a>
+<a href="https://pypi.org/project/mini-swe-agent/">
+    <img src="https://img.shields.io/pypi/v/mini-swe-agent?style=for-the-badge&logo=python&logoColor=white&labelColor=black&color=deeppink" alt="PyPI - Version">
+</a>
+
 </div>
 
-<p>In 2024, <a href="https://swebench.com">SWE-bench</a> &amp; <a href="https://swe-agent.com">SWE-agent</a> helped kickstart the agentic AI for software revolution. In 2025, we ask:
-<strong>What if the agent was 100x smaller, and still worked nearly as well?</strong></p>
+<p>In 2024, <a href="https://swebench.com">SWE-bench</a> &amp; <a href="https://swe-agent.com">SWE-agent</a> helped kickstart the agentic AI for software revolution.</p>
+<p>We now ask: <strong>What if the agent was 100x smaller, and still worked nearly as well?</strong></p>
 <p><code>mini</code> is for</p>
 <ul>
-<li>🧪 <strong>Researchers</strong> who want to <strong>benchmark, fine-tune or RL</strong> without assumptions, bloat, or surprises</li>
-<li>🧑‍💻 <strong>Developers</strong> who like their tools like their scripts: <strong>short, sharp, and readable</strong></li>
-<li>🐳 <strong>Engineers</strong> who want something <strong>trivial to sandbox &amp; to deploy anywhere</strong></li>
+<li><strong>Researchers</strong> who want to <strong>benchmark, fine-tune or RL</strong> without assumptions, bloat, or surprises</li>
+<li>💻 <strong>Developers</strong> who like their tools like their scripts: <strong>short, sharp, and readable</strong></li>
+<li><strong>Engineers</strong> who want something <strong>trivial to sandbox &amp; to deploy anywhere</strong></li>
 </ul>
 <p>Here's some details:</p>
 <ul>
-<li><strong>🐜 Minimal</strong>: Just <a href="https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/agents/default.py">100 lines of python</a> (+100 total for <a href="https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/environments/mini.py">env</a>,
+<li><strong>Minimal</strong>: Just <a href="https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/agents/default.py">100 lines of python</a> (+100 total for <a href="https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/environments/mini.py">env</a>,
 <a href="https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/models/litellm_model.py">model model</a>, <a href="https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/run/hello_world.py">script</a>) — no fancy dependencies!</li>
-<li><strong>💪 Powerful:</strong> Resolves 65% of GitHub issues in the <a href="https://www.swebench.com/">SWE-bench verified benchmark</a>.</li>
-<li><strong>🤗 Friendly:</strong> Comes with <strong>two convenient UIs</strong> that will turn this into your daily dev swiss army knife!</li>
-<li><strong>🍀 Environments:</strong> In addition to local envs, you can use <strong>docker</strong>, <strong>podman</strong>, <strong>singularity</strong>, <strong>apptainer</strong>, and more</li>
-<li><strong>🎓 Cutting edge:</strong> Built by the Princeton &amp; Stanford team behind <a href="https://swebench.com">SWE-bench</a> and <a href="https://swe-agent.com">SWE-agent</a>.</li>
+<li><strong>Powerful:</strong> Resolves 65% of GitHub issues in the <a href="https://www.swebench.com/">SWE-bench verified benchmark</a>.</li>
+<li><strong>Convenient:</strong> Comes with UIs that turn this into your daily dev swiss army knife!</li>
+<li><strong>Deployable:</strong> In addition to local envs, you can use <strong>docker</strong>, <strong>podman</strong>, <strong>singularity</strong>, <strong>apptainer</strong>, and more</li>
+<li><strong>Cutting edge:</strong> Built by the Princeton &amp; Stanford team behind <a href="https://swebench.com">SWE-bench</a> and <a href="https://swe-agent.com">SWE-agent</a>.</li>
 </ul>
 <details class="note">
 <summary>Why use mini-SWE-agent for research?</summary>
@@ -1521,30 +1533,30 @@
 </details>
 <details class="note">
 <summary>Why use mini-SWE-agent as a tool?</summary>
-<p>Some agents are overfitted research artifacts. Others are UI-heavy tools, highly optimized for a specific user experience. Both variants are hard to understand.</p>
-<p><code>mini</code> wants to be:</p>
+<p>Some agents are overfitted research artifacts. Others are UI-heavy frontend monsters.</p>
+<p><code>mini</code> wants to be a hackable tool, not a black box.</p>
 <ul>
 <li><strong>Simple</strong> enough to understand at a glance</li>
 <li><strong>Convenient</strong> enough to use in daily workflows</li>
 <li><strong>Flexible</strong> to extend</li>
 </ul>
-<p>A hackable tool, not a black box.</p>
 <p>Unlike other agents (including our own <a href="https://swe-agent.com/latest/">swe-agent</a>), it is radically simpler, because it:</p>
 <ul>
 <li>Does not have any tools other than bash — it doesn't even use the tool-calling interface of the LMs.</li>
 <li>Has a completely linear history — every step of the agent just appends to the messages and that's it.</li>
-<li>Executes actions with <code>subprocess.run</code> — every action is completely independent (as opposed to keeping a stateful shell session running).</li>
+<li>Executes actions with <code>subprocess.run</code> — every action is completely independent (as opposed to keeping a stateful shell session running). This is <a href="faq/#why-no-shell-session">a big deal</a>, trust me.</li>
 </ul>
 </details>
 <details class="note">
-<summary>Should I use SWE-agent or mini-SWE-agent?</summary>
-<p>You should use mini-swe-agent if</p>
+<summary>Should I use mini-SWE-agent or swe-agent?</summary>
+<p>You should use <code>mini-swe-agent</code> if</p>
 <ul>
 <li>You want a quick command line tool that works locally</li>
 <li>You want an agent with a very simple control flow</li>
 <li>You want even faster, simpler &amp; more stable sandboxing &amp; benchmark evaluations</li>
+<li>You are doing FT or RL and don't want to overfit to a specific agent scaffold</li>
 </ul>
-<p>You should use swe-agent if</p>
+<p>You should use <code>swe-agent</code> if</p>
 <ul>
 <li>You need specific tools or want to experiment with different tools</li>
 <li>You want to experiment with different history processors</li>

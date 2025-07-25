@@ -1583,18 +1583,19 @@
 <p>mini-SWE-agent should work on any system that has a bash shell or uses a container runtime to emulate one.</p>
 </div>
 <details class="question">
-<summary>Should I use SWE-agent or mini-SWE-agent?</summary>
-<p>You should use swe-agent if</p>
-<ul>
-<li>You need specific tools or want to experiment with different tools</li>
-<li>You want to experiment with different history processors</li>
-<li>You want very powerful yaml configuration without touching code</li>
-</ul>
-<p>You should use mini-swe-agent if</p>
+<summary>Should I use mini-SWE-agent or swe-agent?</summary>
+<p>You should use <code>mini-swe-agent</code> if</p>
 <ul>
 <li>You want a quick command line tool that works locally</li>
 <li>You want an agent with a very simple control flow</li>
 <li>You want even faster, simpler &amp; more stable sandboxing &amp; benchmark evaluations</li>
+<li>You are doing FT or RL and don't want to overfit to a specific agent scaffold</li>
+</ul>
+<p>You should use <code>swe-agent</code> if</p>
+<ul>
+<li>You need specific tools or want to experiment with different tools</li>
+<li>You want to experiment with different history processors</li>
+<li>You want very powerful yaml configuration without touching code</li>
 </ul>
 <p>What you get with both</p>
 <ul>
