@@ -1674,19 +1674,24 @@ pre-commit<span class="w"> </span>install
 </ul>
 </div>
 <h2 id="models">Models</h2>
+<div class="admonition tip">
+<p class="admonition-title">TLDR: Models should be set up the first time you run <code>mini</code></p>
+<p>If you missed the setup wizard, just run <code>mini-extra config setup</code>, or take a look at the following section.</p>
+</div>
 <h3 id="setting-api-keys">Setting API keys</h3>
-<p>There are several ways to set your API kyes:</p>
+<p>There are several ways to set your API keys:</p>
 <ul>
+<li>Recommended: Run our setup script: <code>mini-extra config setup</code>. This should also run automatically the first time you run <code>mini</code>.</li>
+<li>Use <code>mini-extra config set ANTHROPIC_API_KEY &lt;your-api-key&gt;</code> to put the key in the <code>mini</code> <a href="../advanced/configuration/">config file</a>.</li>
 <li>Export your key as an environment variable: <code>export ANTHROPIC_API_KEY=&lt;your-api-key&gt;</code> (this is not persistent if you restart your shell, unless you add it to your shell config, like <code>~/.bashrc</code> or <code>~/.zshrc</code>).</li>
-<li>Use <code>mini-extra config set ANTHROPIC_API_KEY &lt;your-api-key&gt;</code> to put the key in the mini config file. The location of the config file is printed when you run <code>mini --help</code>.</li>
 <li>If you only use a single model, you can also set <code>MSWEA_MODEL_API_KEY</code> (as environment variable or in the config file). This takes precedence over all other keys.</li>
-<li>If you run several agents in parallel, see our note about anthropic keys <a href="../advanced/configuration/">here</a>.</li>
+<li>If you run several agents in parallel, see our note about rotating anthropic keys <a href="../advanced/configuration/">here</a>.</li>
 </ul>
 <h3 id="selecting-a-model">Selecting a model</h3>
 <ul>
 <li>All command line interfaces allow you to set the model name with <code>-m</code> or <code>--model</code>.</li>
-<li>In addition, you can set the default model with <code>mini-extra config set MSWEA_MODEL_NAME &lt;model-name&gt;</code> or by editing the global config file.
-  If you run <code>mini</code> for the first time and do not use the <code>--model</code> flag, it will prompt you for the default model.</li>
+<li><code>mini-extra config setup</code> can set the default model for you</li>
+<li>In addition, you can set the default model with <code>mini-extra config set MSWEA_MODEL_NAME &lt;model-name&gt;</code>, by editing the global <a href="../advanced/configuration/">config file</a> (shortcut: <code>mini-extra config edit</code>), or by setting the <code>MSWEA_MODEL_NAME</code> environment variable.</li>
 <li>You can also set your model in a config file (key <code>model_name</code> under <code>model</code>).</li>
 </ul>
 <div class="grid cards">
