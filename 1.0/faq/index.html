@@ -1611,7 +1611,7 @@
   This means you don't have to install anything in any environment you're running in. <code>bash</code> is all you need.</li>
 <li>Has a completely linear history — every step of the agent just appends to the messages and that's it.</li>
 <li>Executes actions with <code>subprocess.run</code> — every action is completely independent (as opposed to keeping a stateful shell session running).
-  This is <a href="#why-no-shell-session">avoids so many issues</a>, trust me.</li>
+  This <a href="#why-no-shell-session">avoids so many issues</a>, trust me.</li>
 </ul>
 </details>
 <details class="question">
@@ -1623,7 +1623,7 @@ As reflected in the high SWE-bench scores, none of the following limitations are
 <li>Actions are parsed from triple-backtick blocks (rather than assuming a function calling/tool calling format)</li>
 <li>By default, actions are executed as <code>subprocess.run</code>, i.e., every action is independent of the previous ones.
   (meaning that the agent cannot change directories or export environment variables; however environment variables
-  can be set per-action). This is <a href="#why-no-shell-session">avoids so many issues</a>, trust me.</li>
+  can be set per-action). This <a href="#why-no-shell-session">avoids so many issues</a>, trust me.</li>
 </ul>
 <p>If you want more flexibility with these items, you can use <a href="https://swe-agent.com/">SWE-agent</a> instead.</p>
 </details>
