@@ -1511,6 +1511,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#metadata-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metadata Handling
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#data-flow" class="md-nav__link">
     <span class="md-ellipsis">
       Data Flow
@@ -1520,9 +1529,27 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage Examples
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#resource-sharing" class="md-nav__link">
     <span class="md-ellipsis">
       Resource Sharing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subagent-registry" class="md-nav__link">
+    <span class="md-ellipsis">
+      Subagent Registry
     </span>
   </a>
   
@@ -1564,19 +1591,23 @@
 <li>the new agent has a different and fresh context</li>
 <li>[x] write to the same console (I want an indicator on the UI to know which agent I'm talking to - root / subagent)</li>
 <li>[x] changing mode on the parent changes the child</li>
+<li>[x] subagent registry is properly interpolated in system templates</li>
 </ul>
 <h2 id="implementation-details">Implementation Details</h2>
 <h3 id="spawning-mechanism">Spawning Mechanism</h3>
-<p>The Manager agent detects subagent spawn requests through echo commands:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MINI_SWE_AGENT_SPAWN_CHILD</span>
+<p>The Manager agent detects subagent spawn requests through echo commands with a specific subagent name:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MINI_SWE_AGENT_SPAWN_CHILD::subagent-name</span>
 <span class="s2">Task description for the subagent&quot;</span>
 </code></pre></div>
+<p><strong>Important</strong>: Generic spawning without a subagent name is NOT allowed. You must specify a subagent name from the registry.</p>
 <p>When this trigger is detected:
 1. Manager intercepts the echo output in <code>execute_action()</code>
-2. Extracts the task description (everything after the trigger line)
-3. Creates a new Manager instance with hierarchical agent ID
-4. Runs the child agent with <code>child.run(task)</code>
-5. Returns child's output as the parent's command result</p>
+2. Validates that a subagent name is specified (rejects if not)
+3. Extracts the subagent name and task description
+4. Loads the subagent's metadata and system template from <code>.claude/agents/</code>
+5. Creates a new Manager instance with the subagent's specific system template and all metadata as constructor arguments
+6. Runs the child agent with <code>child.run(task)</code>
+7. Returns child's output as the parent's command result</p>
 <h3 id="agent-hierarchy">Agent Hierarchy</h3>
 <p>Agents are identified with hierarchical IDs showing their full path:
 - <code>ROOT</code> - The root agent
@@ -1589,6 +1620,19 @@
 - Child agents check parent's mode via property
 - Mode changes propagate to root and affect all agents
 - UI clearly indicates mode changes affect entire hierarchy</p>
+<h3 id="metadata-handling">Metadata Handling</h3>
+<p>All YAML frontmatter metadata from subagent files is passed to the subagent instance:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tdd-reviewer</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Ask</span><span class="nv"> </span><span class="s">TDD</span><span class="nv"> </span><span class="s">Reviewer</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">review...&quot;</span>
+<span class="nt">custom_param</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;custom_value&quot;</span>
+<span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">300</span>
+<span class="nn">---</span>
+</code></pre></div>
+<p>When spawning this subagent:
+- <code>system_template</code> is set to the markdown content after frontmatter
+- All metadata fields (except <code>name</code>) are passed as constructor arguments
+- This allows subagents to have custom configuration via their YAML metadata</p>
 <h3 id="data-flow">Data Flow</h3>
 <p>Subagents return data using the standard termination mechanism:
 <div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MINI_SWE_AGENT_FINAL_OUTPUT</span>
@@ -1596,6 +1640,15 @@
 <span class="s2">Return data line 2&quot;</span>
 </code></pre></div></p>
 <p>This data flows back to the parent as command output, appearing in the parent's conversation context for further processing.</p>
+<h3 id="usage-examples">Usage Examples</h3>
+<p><strong>To spawn a specific subagent:</strong>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MINI_SWE_AGENT_SPAWN_CHILD::tdd-reviewer</span>
+<span class="s2">Please review this code change for TDD compliance&quot;</span>
+</code></pre></div></p>
+<p><strong>Invalid (will cause error):</strong>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;MINI_SWE_AGENT_SPAWN_CHILD</span>
+<span class="s2">Complete this general task&quot;</span>
+</code></pre></div></p>
 <h3 id="resource-sharing">Resource Sharing</h3>
 <ul>
 <li><strong>Model</strong>: Shared across all agents for unified cost tracking</li>
@@ -1603,6 +1656,12 @@
 <li><strong>Messages</strong>: Each agent has its own message history (fresh context)</li>
 <li><strong>Config</strong>: Each agent has its own config, except mode which is inherited</li>
 </ul>
+<h3 id="subagent-registry">Subagent Registry</h3>
+<p>The Manager agent uses a custom <code>ManagerAgentConfig</code> dataclass that includes:
+- <code>subagent_registry</code>: Automatically loaded from <code>.claude/agents/</code> directory
+- <code>agent_id</code>: Unique identifier for agent instances
+- <code>parent_agent</code>: Reference to parent agent (if any)</p>
+<p>The subagent registry is available in system templates via <code>{{subagent_registry}}</code> and lists all available subagents with their descriptions. This allows the agent to see which subagents are available for delegation.</p>
 
 
 
