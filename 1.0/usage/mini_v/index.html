@@ -628,6 +628,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#miscellaneous-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Miscellaneous tips
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#implementation" class="md-nav__link">
     <span class="md-ellipsis">
       Implementation
@@ -1622,6 +1631,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#miscellaneous-tips" class="md-nav__link">
+    <span class="md-ellipsis">
+      Miscellaneous tips
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#implementation" class="md-nav__link">
     <span class="md-ellipsis">
       Implementation
@@ -1677,6 +1695,14 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
   </div>
 </figure>
 <h2 id="command-line-options">Command line options</h2>
+<p>Invocation</p>
+<div class="highlight"><pre><span></span><code>mini<span class="w"> </span>-v<span class="w"> </span><span class="o">[</span>other<span class="w"> </span>options<span class="o">]</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Default visual mode</p>
+<p>If you want to use the visual mode by default, you can set the <code>MSWEA_VISUAL_MODE_DEFAULT</code> environment variable to <code>true</code>
+(<code>mini-extra config set MSWEA_VISUAL_MODE_DEFAULT true</code>).</p>
+</div>
 <p>Useful switches:</p>
 <ul>
 <li><code>-h</code>/<code>--help</code>: Show help</li>
@@ -1687,12 +1713,20 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <li><code>-y</code>/<code>--yolo</code>: Start in <code>yolo</code> mode (see below)</li>
 </ul>
 <h2 id="key-bindings">Key bindings</h2>
+<div class="admonition tip">
+<p class="admonition-title">Focused input fields</p>
+<p>Whenever you are prompted to enter text, the input field will be focused.
+You can use <code>Tab</code> or <code>Esc</code> to switch between the input field controls and the general controls below.</p>
+</div>
 <ul>
-<li><code>q</code>: Quit the agent</li>
+<li><code>f1</code> or <code>?</code>: Show keybinding help</li>
+<li><code>q</code> (or <code>ctrl+q</code>): Quit the agent</li>
 <li><code>c</code>: Switch to <code>confirm</code> mode</li>
-<li><code>y</code>: Switch to <code>yolo</code> mode</li>
-<li><code>h</code> or <code>LEFT</code>: Go back in history</li>
-<li><code>l</code> or <code>RIGHT</code>: Go forward in history</li>
+<li><code>y</code> (or <code>ctrl+y</code>): Switch to <code>yolo</code> mode</li>
+<li><code>h</code> or <code>LEFT</code>: Go to previous step of the agent</li>
+<li><code>l</code> or <code>RIGHT</code>: Go to next step of the agent</li>
+<li><code>0</code>: Go to first step of the agent</li>
+<li><code>$</code>: Go to last step of the agent</li>
 <li><code>j</code> or <code>DOWN</code>: Scroll down</li>
 <li><code>k</code> or <code>UP</code>: Scroll up</li>
 </ul>
@@ -1701,14 +1735,20 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <ul>
 <li><code>confirm</code> (<code>c</code>): The LM proposes an action and the user is prompted to confirm (press Enter)) or reject (enter a rejection message))</li>
 <li><code>yolo</code> (<code>y</code>): The action from the LM is executed immediately without confirmation</li>
+<li><code>human</code> (<code>u</code>): The user is prompted to enter a command directly</li>
 </ul>
-<p>You can switch between the modes at any time by pressing the <code>c</code> or <code>y</code> keys.</p>
+<p>You can switch between the modes at any time by pressing the <code>c</code>, <code>y</code>, or <code>u</code> keys.</p>
 <p><code>mini -v</code> starts in <code>confirm</code> mode by default. To start in <code>yolo</code> mode, you can add <code>-y</code>/<code>--yolo</code> to the command line.</p>
 <h3 id="faq">FAQ</h3>
 <blockquote>
 <p>How can I select/copy text on the screen?</p>
 </blockquote>
 <p>Hold down the <code>Alt</code>/<code>Option</code> key and use the mouse to select the text.</p>
+<h2 id="miscellaneous-tips">Miscellaneous tips</h2>
+<ul>
+<li><code>mini</code> saves the full history of your last run to your global config directory.
+  The path to the directory is printed when you start <code>mini</code>.</li>
+</ul>
 <h2 id="implementation">Implementation</h2>
 <details class="note">
 <summary>Default config</summary>
@@ -1910,6 +1950,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 <span class="kn">from</span><span class="w"> </span><span class="nn">minisweagent.run.utils.save</span><span class="w"> </span><span class="kn">import</span> <span class="n">save_traj</span>
 
 <span class="n">DEFAULT_CONFIG</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_MINI_CONFIG_PATH&quot;</span><span class="p">,</span> <span class="n">builtin_config_dir</span> <span class="o">/</span> <span class="s2">&quot;mini.yaml&quot;</span><span class="p">))</span>
+<span class="n">DEFAULT_OUTPUT</span> <span class="o">=</span> <span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;last_mini_run.traj.json&quot;</span>
 <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">(</span><span class="n">highlight</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">app</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Typer</span><span class="p">(</span><span class="n">rich_markup_mode</span><span class="o">=</span><span class="s2">&quot;rich&quot;</span><span class="p">)</span>
 <span class="n">prompt_session</span> <span class="o">=</span> <span class="n">PromptSession</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">FileHistory</span><span class="p">(</span><span class="n">global_config_dir</span> <span class="o">/</span> <span class="s2">&quot;mini_task_history.txt&quot;</span><span class="p">))</span>
@@ -1958,7 +1999,12 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="n">help</span><span class="o">=</span><span class="n">_HELP_TEXT</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span>
-    <span class="n">visual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">,</span> <span class="s2">&quot;--visual&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Use visual (pager-style) UI (Textual)&quot;</span><span class="p">),</span>
+    <span class="n">visual</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+        <span class="kc">False</span><span class="p">,</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--visual&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Toggle (pager-style) UI (Textual) depending on the MSWEA_VISUAL_MODE_DEFAULT environment setting&quot;</span><span class="p">,</span>
+    <span class="p">),</span>
     <span class="n">model_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
         <span class="kc">None</span><span class="p">,</span>
         <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
@@ -1969,7 +2015,7 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
     <span class="n">yolo</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;-y&quot;</span><span class="p">,</span> <span class="s2">&quot;--yolo&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Run without confirmation&quot;</span><span class="p">),</span>
     <span class="n">cost_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="s2">&quot;--cost-limit&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Cost limit. Set to 0 to disable.&quot;</span><span class="p">),</span>
     <span class="n">config_spec</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">DEFAULT_CONFIG</span><span class="p">,</span> <span class="s2">&quot;-c&quot;</span><span class="p">,</span> <span class="s2">&quot;--config&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to config file&quot;</span><span class="p">),</span>
-    <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output file&quot;</span><span class="p">),</span>
+    <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="n">DEFAULT_OUTPUT</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="s2">&quot;--output&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output trajectory file&quot;</span><span class="p">),</span>
     <span class="n">exit_immediately</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
         <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--exit-immediately&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Exit immediately when the agent wants to finish instead of prompting.&quot;</span>
     <span class="p">),</span>
@@ -1993,12 +2039,13 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
     <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">][</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;confirm&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">yolo</span> <span class="k">else</span> <span class="s2">&quot;yolo&quot;</span>
     <span class="k">if</span> <span class="n">cost_limit</span><span class="p">:</span>
         <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">][</span><span class="s2">&quot;cost_limit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cost_limit</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">visual</span> <span class="ow">and</span> <span class="n">exit_immediately</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">exit_immediately</span><span class="p">:</span>
         <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">][</span><span class="s2">&quot;confirm_exit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="n">model</span> <span class="o">=</span> <span class="n">get_model</span><span class="p">(</span><span class="n">model_name</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="p">{}))</span>
     <span class="n">env</span> <span class="o">=</span> <span class="n">LocalEnvironment</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;env&quot;</span><span class="p">,</span> <span class="p">{}))</span>
 
-    <span class="k">if</span> <span class="n">visual</span><span class="p">:</span>
+    <span class="c1"># Both visual flag and the MSWEA_VISUAL_MODE_DEFAULT flip the mode, so it&#39;s essentially a XOR</span>
+    <span class="k">if</span> <span class="n">visual</span> <span class="o">==</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;MSWEA_VISUAL_MODE_DEFAULT&quot;</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;false&quot;</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">run_textual</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">run_interactive</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">env</span><span class="p">,</span> <span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent&quot;</span><span class="p">],</span> <span class="n">task</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>  <span class="c1"># type: ignore[arg-type]</span>
@@ -2075,7 +2122,9 @@ or in our <a href="https://join.slack.com/t/swe-bench/shared_invite/zt-36pj9bu5s
                 <span class="k">case</span> <span class="s2">&quot;/y&quot;</span> <span class="o">|</span> <span class="s2">&quot;/c&quot;</span><span class="p">:</span>  <span class="c1"># Just go to the super query, which queries the LM for the next action</span>
                     <span class="k">pass</span>
                 <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">```bash</span><span class="se">\n</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="se">\n</span><span class="s2">```&quot;</span><span class="p">}</span>
+                    <span class="n">msg</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">```bash</span><span class="se">\n</span><span class="si">{</span><span class="n">command</span><span class="si">}</span><span class="se">\n</span><span class="s2">```&quot;</span><span class="p">}</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_message</span><span class="p">(</span><span class="s2">&quot;assistant&quot;</span><span class="p">,</span> <span class="n">msg</span><span class="p">[</span><span class="s2">&quot;content&quot;</span><span class="p">])</span>
+                    <span class="k">return</span> <span class="n">msg</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">console</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s2">&quot;Waiting for the LM to respond...&quot;</span><span class="p">):</span>
                 <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">query</span><span class="p">()</span>
